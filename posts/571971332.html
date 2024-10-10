@@ -1,0 +1,578 @@
+
+    <!DOCTYPE html>
+    <html lang="zh-CN"
+            
+          
+    >
+    <head>
+    <meta charset="utf-8">
+    
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=true"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+
+        gtag('js', new Date());
+
+        gtag('config', 'true');
+    </script>
+    <!-- End Google Analytics -->
+
+
+    
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+          var hm = document.createElement("script");
+          hm.src = "https://hm.baidu.com/hm.js?true";
+          var s = document.getElementsByTagName("script")[0]; 
+          s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+
+    
+    <title>
+        前端实现设计模式之观察者模式 |
+        
+        前端小溪呀</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Mulish:300,300italic,400,400italic,700,700italic%7CNoto%20Serif%20SC:300,300italic,400,400italic,700,700italic%7CUbuntu%20Mono:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+    
+<link rel="stylesheet" href="https://unpkg.com/@fortawesome/fontawesome-free/css/v4-font-face.min.css">
+
+    
+<link rel="stylesheet" href="/css/loader.css">
+
+    <meta name="description" content="引言 观察者模式是一种行为型设计模式，用于在对象之间建立一种一对多的依赖关系，当一个对象的状态发生变化时，其依赖的所有对象都会得到通知并自动更新。在前端开发中，观察者模式常用于实现事件订阅和发布机制，以及组件之间的通信。本文将介绍观察者模式的概念和应用，并提供具体的代码示例和解读。  什么是观察者模式？ 观察者模式是一种通过建立对象之间的一对多依赖关系，实现状态变化时的自动更新机制的设计模式。在">
+<meta property="og:type" content="article">
+<meta property="og:title" content="前端实现设计模式之观察者模式">
+<meta property="og:url" content="https://xiaoxi.mailjob.net/posts/571971332.html">
+<meta property="og:site_name" content="前端小溪呀">
+<meta property="og:description" content="引言 观察者模式是一种行为型设计模式，用于在对象之间建立一种一对多的依赖关系，当一个对象的状态发生变化时，其依赖的所有对象都会得到通知并自动更新。在前端开发中，观察者模式常用于实现事件订阅和发布机制，以及组件之间的通信。本文将介绍观察者模式的概念和应用，并提供具体的代码示例和解读。  什么是观察者模式？ 观察者模式是一种通过建立对象之间的一对多依赖关系，实现状态变化时的自动更新机制的设计模式。在">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-09-13T06:38:14.000Z">
+<meta property="article:modified_time" content="2024-10-10T04:04:53.681Z">
+<meta property="article:author" content="左苗苗">
+<meta property="article:tag" content="design">
+<meta name="twitter:card" content="summary">
+    
+        <link rel="alternate" href="/atom.xml" title="前端小溪呀" type="application/atom+xml">
+    
+    
+        <link rel="shortcut icon" href="/images/favicon.ico">
+    
+    
+        
+<link rel="stylesheet" href="https://unpkg.com/typeface-source-code-pro@1.1.13/index.css">
+
+    
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    
+        
+<link rel="stylesheet" href="https://unpkg.com/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css">
+
+    
+    
+        
+<link rel="stylesheet" href="https://unpkg.com/katex@0.16.7/dist/katex.min.css">
+
+    
+    
+    
+    
+<script src="https://unpkg.com/pace-js@1.2.4/pace.min.js"></script>
+
+    
+        
+<link rel="stylesheet" href="https://unpkg.com/wowjs@1.1.3/css/libs/animate.css">
+
+        
+<script src="https://unpkg.com/wowjs@1.1.3/dist/wow.min.js"></script>
+
+        <script>
+          new WOW({
+            offset: 0,
+            mobile: true,
+            live: false
+          }).init();
+        </script>
+    
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+    <body>
+    
+<div id='loader'>
+  <div class="loading-left-bg"></div>
+  <div class="loading-right-bg"></div>
+  <div class="spinner-box">
+    <div class="loading-taichi">
+      <svg width="150" height="150" viewBox="0 0 1024 1024" class="icon" version="1.1" xmlns="http://www.w3.org/2000/svg" shape-rendering="geometricPrecision">
+      <path d="M303.5 432A80 80 0 0 1 291.5 592A80 80 0 0 1 303.5 432z" fill="#ff6e6b" />
+      <path d="M512 65A447 447 0 0 1 512 959L512 929A417 417 0 0 0 512 95A417 417 0 0 0 512 929L512 959A447 447 0 0 1 512 65z" fill="#fd0d00" />
+      <path d="M512 95A417 417 0 0 1 929 512A208.5 208.5 0 0 1 720.5 720.5L720.5 592A80 80 0 0 0 720.5 432A80 80 0 0 0 720.5 592L720.5 720.5A208.5 208.5 0 0 1 512 512A208.5 208.5 0 0 0 303.5 303.5A208.5 208.5 0 0 0 95 512A417 417 0 0 1 512 95" fill="#fd0d00" />
+    </svg>
+    </div>
+    <div class="loading-word">Loading...</div>
+  </div>
+</div>
+</div>
+
+<script>
+  const endLoading = function() {
+    document.body.style.overflow = 'auto';
+    document.getElementById('loader').classList.add("loading");
+  }
+  window.addEventListener('load', endLoading);
+  document.getElementById('loader').addEventListener('click', endLoading);
+</script>
+
+
+    <div id="container">
+        <div id="wrap">
+            <header id="header">
+    
+        <img data-src="/images/banner.jpg" data-sizes="auto" alt="前端实现设计模式之观察者模式" class="lazyload">
+    
+    <div id="header-outer" class="outer">
+        <div id="header-title" class="inner">
+            <div id="logo-wrap">
+                
+                    
+                    
+                        <a href="/" id="logo"><h1>前端实现设计模式之观察者模式</h1></a>
+                    
+                
+            </div>
+            
+                
+                
+            
+        </div>
+        <div id="header-inner">
+            <nav id="main-nav">
+                <a id="main-nav-toggle" class="nav-icon"></a>
+                
+                    <span class="main-nav-link-wrap">
+                        <span class="main-nav-icon"></span>
+                        <a class="main-nav-link" href="/">首页</a>
+                    </span>
+                
+                    <span class="main-nav-link-wrap">
+                        <span class="main-nav-icon"></span>
+                        <a class="main-nav-link" href="/archives">归档</a>
+                    </span>
+                
+                    <span class="main-nav-link-wrap">
+                        <span class="main-nav-icon"></span>
+                        <a class="main-nav-link" href="/about">关于</a>
+                    </span>
+                
+                    <span class="main-nav-link-wrap">
+                        <span class="main-nav-icon"></span>
+                        <a class="main-nav-link" href="/friend">友链</a>
+                    </span>
+                
+            </nav>
+            <nav id="sub-nav">
+                
+                    <a id="nav-rss-link" class="nav-icon" href="/atom.xml"
+                       title="RSS 订阅"></a>
+                
+                
+            </nav>
+            <div id="search-form-wrap">
+                <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="搜索"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://xiaoxi.mailjob.net"></form>
+            </div>
+        </div>
+    </div>
+</header>
+
+            <div id="content" class="outer">
+                <section id="main"><article id="post-design/行为型模式/19-观察者模式" class="h-entry article article-type-post"
+         itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+    <div class="article-inner">
+        <div class="article-meta">
+            <div class="article-date wow slideInLeft">
+    <a href="/posts/571971332.html" class="article-date-link">
+        <time datetime="2022-09-13T06:38:14.000Z"
+              itemprop="datePublished">2022-09-13</time>
+    </a>
+</div>
+
+            
+    <div class="article-category wow slideInLeft">
+        <a class="article-category-link" href="/categories/design/">design</a>
+    </div>
+
+
+        </div>
+        <div class="hr-line"></div>
+        
+
+        <div class="e-content article-entry" itemprop="articleBody">
+            
+                <h2 id="引言"><a class="markdownIt-Anchor" href="#引言"></a> 引言</h2>
+<p>观察者模式是一种行为型设计模式，用于在对象之间建立一种一对多的依赖关系，当一个对象的状态发生变化时，其依赖的所有对象都会得到通知并自动更新。在前端开发中，观察者模式常用于实现事件订阅和发布机制，以及组件之间的通信。本文将介绍观察者模式的概念和应用，并提供具体的代码示例和解读。</p>
+<h2 id="什么是观察者模式"><a class="markdownIt-Anchor" href="#什么是观察者模式"></a> 什么是观察者模式？</h2>
+<p>观察者模式是一种通过建立对象之间的一对多依赖关系，实现状态变化时的自动更新机制的设计模式。在观察者模式中，有两种角色：</p>
+<ul>
+<li>Subject（主题）：主题是被观察的对象，它维护一组观察者对象，并在状态变化时通知观察者。</li>
+<li>Observer（观察者）：观察者是依赖于主题的对象，它注册到主题中以接收状态变化的通知，并根据通知更新自身状态。</li>
+</ul>
+<p>当主题的状态发生变化时，它会遍历通知所有注册的观察者对象，观察者对象接收到通知后进行相应的更新操作。</p>
+<h2 id="观察者模式的应用场景"><a class="markdownIt-Anchor" href="#观察者模式的应用场景"></a> 观察者模式的应用场景</h2>
+<p>观察者模式在前端开发中有许多应用场景，包括但不限于：</p>
+<ol>
+<li>事件订阅和发布：在前端应用中，我们经常需要实现事件的订阅和发布机制。观察者模式可以用于实现这一机制，主题对象充当事件发布者，观察者对象充当事件订阅者，当事件发生时，主题对象会通知所有观察者对象。</li>
+<li>状态管理：在前端框架（如React、Vue等）中，我们通常需要管理组件的状态。观察者模式可以用于实现状态管理，主题对象充当状态管理器，观察者对象充当组件，当状态发生变化时，主题对象会通知所有观察者对象进行更新。</li>
+<li>数据绑定：在前端开发中，我们常常需要实现数据的双向绑定。观察者模式可以用于实现数据绑定，主题对象维护数据的状态，观察者对象绑定到数据上，并在数据变化时得到通知并自动更新。</li>
+</ol>
+<h2 id="示例代码"><a class="markdownIt-Anchor" href="#示例代码"></a> 示例代码</h2>
+<p>下面是一个使用观察者模式实现事件订阅和发布机制的示例代码：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 主题对象</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Subject</span> &#123;</span><br><span class="line">  <span class="title function_">constructor</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">observers</span> = [];</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="title function_">addObserver</span>(<span class="params">observer</span>) &#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">observers</span>.<span class="title function_">push</span>(observer);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="title function_">removeObserver</span>(<span class="params">observer</span>) &#123;</span><br><span class="line">    <span class="keyword">const</span> index = <span class="variable language_">this</span>.<span class="property">observers</span>.<span class="title function_">indexOf</span>(observer);</span><br><span class="line">    <span class="keyword">if</span> (index !== -<span class="number">1</span>) &#123;</span><br><span class="line">      <span class="variable language_">this</span>.<span class="property">observers</span>.<span class="title function_">splice</span>(index, <span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="title function_">notify</span>(<span class="params">data</span>) &#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">observers</span>.<span class="title function_">forEach</span>(<span class="function"><span class="params">observer</span> =&gt;</span> observer.<span class="title function_">update</span>(data));</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 观察者对象</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Observer</span> &#123;</span><br><span class="line">  <span class="title function_">constructor</span>(<span class="params">name</span>) &#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">name</span> = name;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="title function_">update</span>(<span class="params">data</span>) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">`<span class="subst">$&#123;<span class="variable language_">this</span>.name&#125;</span> received data: <span class="subst">$&#123;data&#125;</span>`</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 使用示例</span></span><br><span class="line"><span class="keyword">const</span> subject = <span class="keyword">new</span> <span class="title class_">Subject</span>();</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> observer1 = <span class="keyword">new</span> <span class="title class_">Observer</span>(<span class="string">&quot;Observer 1&quot;</span>);</span><br><span class="line"><span class="keyword">const</span> observer2 = <span class="keyword">new</span> <span class="title class_">Observer</span>(<span class="string">&quot;Observer 2&quot;</span>);</span><br><span class="line"></span><br><span class="line">subject.<span class="title function_">addObserver</span>(observer1);</span><br><span class="line">subject.<span class="title function_">addObserver</span>(observer2);</span><br><span class="line"></span><br><span class="line">subject.<span class="title function_">notify</span>(<span class="string">&quot;Hello, observers!&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 输出：</span></span><br><span class="line"><span class="comment">// Observer 1 received data: Hello, observers!</span></span><br><span class="line"><span class="comment">// Observer 2 received data: Hello, observers!</span></span><br></pre></td></tr></table></figure>
+<h2 id="代码解读"><a class="markdownIt-Anchor" href="#代码解读"></a> 代码解读</h2>
+<p>上述代码示例中，我们定义了两个类：<code>Subject</code>（主题）和<code>Observer</code>（观察者）。</p>
+<p><code>Subject</code>类表示主题对象，它维护了一个观察者数组，并提供了添加观察者、移除观察者和通知观察者的方法。<code>Observer</code>类表示观察者对象，它具有一个<code>update</code>方法，用于接收主题对象的通知并进行相应的更新操作。</p>
+<p>在示例中，我们创建了一个主题对象<code>subject</code>，并创建了两个观察者对象<code>observer1</code>和<code>observer2</code>。我们通过调用<code>subject.addObserver(observer)</code>方法将观察者对象注册到主题对象中。然后，我们调用<code>subject.notify(data)</code>方法通知所有观察者对象，并传递数据作为参数。</p>
+<p>观察者对象在接收到通知后，会调用自身的<code>update</code>方法进行更新操作。在示例中，观察者对象简单地打印接收到的数据。</p>
+<h2 id="示例说明"><a class="markdownIt-Anchor" href="#示例说明"></a> 示例说明</h2>
+<p>假设你正在开发一个新闻发布应用，用户可以订阅不同的新闻类别，并在有新闻发布时得到通知。</p>
+<p>你可以使用观察者模式来实现这一功能。每个新闻类别可以作为一个主题对象，用户订阅该类别的新闻时，将观察者对象注册到对应的主题对象中。当有新闻发布时，主题对象会通知所有观察者对象，并传递新闻数据作为参数。观察者对象在接收到通知后，可以根据新闻数据进行相应的操作，例如展示新闻内容。</p>
+<p>通过使用观察者模式，你可以实现一个灵活的新闻订阅和发布系统，让用户能够及时获取感兴趣的新闻内容。</p>
+<h2 id="生活化场景举例说明"><a class="markdownIt-Anchor" href="#生活化场景举例说明"></a> 生活化场景举例说明</h2>
+<p>假设你正在开发一个在线聊天应用程序，用户可以创建聊天室并邀请其他用户加入。</p>
+<p>当用户创建一个聊天室时，该聊天室可以作为一个主题对象，其他用户可以作为观察者对象。当聊天室中有新消息时，主题对象会通知所有观察者对象，并传递消息数据作为参数。观察者对象在接收到通知后，可以根据消息数据进行相应的操作，例如展示聊天内容。</p>
+<p>通过使用观察者模式，你可以实现实时的聊天功能，让用户能够方便地进行在线交流。</p>
+<h2 id="结论"><a class="markdownIt-Anchor" href="#结论"></a> 结论</h2>
+<p>观察者模式是一种在前端开发中常用的设计模式，它可以实现事件订阅和发布机制，以及组件之间的通信。本文介绍了观察者模式的概念和应用场景，并提供了具体的代码示例和解读。通过使用观察者模式，我们可以实现灵活的事件处理、状态管理和数据绑定等功能，提高前端应用的可维护性和用户体验。</p>
+
+            
+        </div>
+        <footer class="article-footer">
+            <a data-url="https://xiaoxi.mailjob.net/posts/571971332.html" data-id="cm22rzbje005cbzn7f7xndai5" data-title="前端实现设计模式之观察者模式"
+               class="article-share-link">分享</a>
+            
+            
+            
+            
+    <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/design/" rel="tag">design</a></li></ul>
+
+
+        </footer>
+    </div>
+    
+        
+    <nav id="article-nav" class="wow fadeInUp">
+        
+            <div class="article-nav-link-wrap article-nav-link-left">
+                
+                    
+                    
+                        <img data-src="https://img.github.mailjob.net/202410101007825.jpg" data-sizes="auto" alt="前端实现设计模式之状态模式" class="lazyload">
+                    
+                
+                <a href="/posts/1986308212.html"></a>
+                <div class="article-nav-caption">前一篇</div>
+                <h3 class="article-nav-title">
+                    
+                        前端实现设计模式之状态模式
+                    
+                </h3>
+            </div>
+        
+        
+            <div class="article-nav-link-wrap article-nav-link-right">
+                
+                    
+                    
+                        <img data-src="https://img.github.mailjob.net/202410101007825.jpg" data-sizes="auto" alt="前端实现设计模式之备忘录模式" class="lazyload">
+                    
+                
+                <a href="/posts/2065994055.html"></a>
+                <div class="article-nav-caption">后一篇</div>
+                <h3 class="article-nav-title">
+                    
+                        前端实现设计模式之备忘录模式
+                    
+                </h3>
+            </div>
+        
+    </nav>
+
+
+    
+</article>
+
+
+
+
+
+
+
+
+
+
+
+</section>
+                
+                    <aside id="sidebar">
+    <div class="sidebar-wrap wow fadeInRight">
+        <div class="sidebar-author">
+            <img data-src="/avatar/avatar.PNG" data-sizes="auto" alt="左苗苗" class="lazyload">
+            <div class="sidebar-author-name">左苗苗</div>
+            <div class="sidebar-description">欢迎来到前端小溪呀！这是一个专注于前端开发的个人博客，旨在分享我在前端领域的学习、实践和探索。我会不断分享我的项目经验、前沿工具和最佳实践，并记录下我在编码过程中的思考和灵感。</div>
+        </div>
+        <div class="sidebar-state">
+            <div class="sidebar-state-article">
+                <div>文章</div>
+                <div class="sidebar-state-number">62</div>
+            </div>
+            <div class="sidebar-state-category">
+                <div>分类</div>
+                <div class="sidebar-state-number">9</div>
+            </div>
+            <div class="sidebar-state-tag">
+                <div>标签</div>
+                <div class="sidebar-state-number">9</div>
+            </div>
+        </div>
+        <div class="sidebar-social">
+            
+                <div class=icon-github>
+                    <a href=https://github.com/miaomiaozuo itemprop="url" target="_blank"></a>
+                </div>
+            
+        </div>
+        <div class="sidebar-menu">
+            
+                <div class="sidebar-menu-link-wrap">
+                    <a class="sidebar-menu-link-dummy" href="/"></a>
+                    <span class="sidebar-menu-icon"></span>
+                    <div class="sidebar-menu-link">首页</div>
+                </div>
+            
+                <div class="sidebar-menu-link-wrap">
+                    <a class="sidebar-menu-link-dummy" href="/archives"></a>
+                    <span class="sidebar-menu-icon"></span>
+                    <div class="sidebar-menu-link">归档</div>
+                </div>
+            
+                <div class="sidebar-menu-link-wrap">
+                    <a class="sidebar-menu-link-dummy" href="/about"></a>
+                    <span class="sidebar-menu-icon"></span>
+                    <div class="sidebar-menu-link">关于</div>
+                </div>
+            
+                <div class="sidebar-menu-link-wrap">
+                    <a class="sidebar-menu-link-dummy" href="/friend"></a>
+                    <span class="sidebar-menu-icon"></span>
+                    <div class="sidebar-menu-link">友链</div>
+                </div>
+            
+        </div>
+    </div>
+    
+        
+    <div class="widget-wrap wow fadeInRight">
+        <h3 class="widget-title">分类</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/blog/">blog</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/css/">css</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/design/">design</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/js/">js</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/node/">node</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/react/">react</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/ts/">ts</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/vue/">vue</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/web/">web</a></li></ul>
+        </div>
+    </div>
+
+
+    
+        
+    <div class="widget-wrap wow fadeInRight">
+        <h3 class="widget-title">标签云</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/blog/" style="font-size: 18px;">blog</a> <a href="/tags/css/" style="font-size: 10px;">css</a> <a href="/tags/design/" style="font-size: 20px;">design</a> <a href="/tags/js/" style="font-size: 16px;">js</a> <a href="/tags/node/" style="font-size: 10px;">node</a> <a href="/tags/react/" style="font-size: 12px;">react</a> <a href="/tags/ts/" style="font-size: 12px;">ts</a> <a href="/tags/vue/" style="font-size: 12px;">vue</a> <a href="/tags/web/" style="font-size: 14px;">web</a>
+        </div>
+    </div>
+
+
+    
+        
+    <div class="widget-wrap wow fadeInRight">
+        <h3 class="widget-title">归档</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/10/">十月 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/07/">七月 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/05/">五月 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/04/">四月 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/03/">三月 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/01/">一月 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/12/">十二月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/11/">十一月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/09/">九月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/08/">八月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/07/">七月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/06/">六月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/03/">三月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/01/">一月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/12/">十二月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/11/">十一月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/08/">八月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/07/">七月 2021</a></li></ul>
+        </div>
+    </div>
+
+
+    
+</aside>
+
+                
+            </div>
+            <footer id="footer" class="wow fadeInUp">
+    <div style="width: 100%; overflow: hidden"><div class="footer-line"></div></div>
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            
+                All website licensed under <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank">CC BY 4.0</a></br>
+            
+            <div>
+                <span class="icon-copyright"></span>
+                2020-2024
+                <span class="footer-info-sep"></span>
+                左苗苗
+            </div>
+            
+            
+            
+        </div>
+    </div>
+</footer>
+
+        </div>
+        <nav id="mobile-nav">
+    <div class="sidebar-wrap">
+        <div class="sidebar-author">
+            <img data-src="/avatar/avatar.PNG" data-sizes="auto" alt="左苗苗" class="lazyload">
+            <div class="sidebar-author-name">左苗苗</div>
+            <div class="sidebar-description">欢迎来到前端小溪呀！这是一个专注于前端开发的个人博客，旨在分享我在前端领域的学习、实践和探索。我会不断分享我的项目经验、前沿工具和最佳实践，并记录下我在编码过程中的思考和灵感。</div>
+        </div>
+        <div class="sidebar-state">
+            <div class="sidebar-state-article">
+                <div>文章</div>
+                <div class="sidebar-state-number">62</div>
+            </div>
+            <div class="sidebar-state-category">
+                <div>分类</div>
+                <div class="sidebar-state-number">9</div>
+            </div>
+            <div class="sidebar-state-tag">
+                <div>标签</div>
+                <div class="sidebar-state-number">9</div>
+            </div>
+        </div>
+        <div class="sidebar-social">
+            
+                <div class=icon-github>
+                    <a href=https://github.com/miaomiaozuo itemprop="url" target="_blank"></a>
+                </div>
+            
+        </div>
+        <div class="sidebar-menu">
+            
+                <div class="sidebar-menu-link-wrap">
+                    <a class="sidebar-menu-link-dummy" href="/"></a>
+                    <span class="sidebar-menu-icon"></span>
+                    <div class="sidebar-menu-link">首页</div>
+                </div>
+            
+                <div class="sidebar-menu-link-wrap">
+                    <a class="sidebar-menu-link-dummy" href="/archives"></a>
+                    <span class="sidebar-menu-icon"></span>
+                    <div class="sidebar-menu-link">归档</div>
+                </div>
+            
+                <div class="sidebar-menu-link-wrap">
+                    <a class="sidebar-menu-link-dummy" href="/about"></a>
+                    <span class="sidebar-menu-icon"></span>
+                    <div class="sidebar-menu-link">关于</div>
+                </div>
+            
+                <div class="sidebar-menu-link-wrap">
+                    <a class="sidebar-menu-link-dummy" href="/friend"></a>
+                    <span class="sidebar-menu-icon"></span>
+                    <div class="sidebar-menu-link">友链</div>
+                </div>
+            
+        </div>
+    </div>
+</nav>
+
+        
+<script src="https://unpkg.com/jquery@3.7.0/dist/jquery.min.js"></script>
+
+
+<script src="https://unpkg.com/lazysizes@5.3.2/lazysizes.min.js"></script>
+
+
+<script src="https://unpkg.com/clipboard@2.0.11/dist/clipboard.min.js"></script>
+
+
+
+    
+<script src="https://unpkg.com/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+
+
+
+
+
+    
+<script src="https://unpkg.com/mermaid@9.4.3/dist/mermaid.min.js"></script>
+
+    <script>
+        if (window.mermaid) {
+            mermaid.initialize({theme: 'forest'});
+        }
+    </script>
+
+
+
+<script src="/js/script.js"></script>
+
+
+    <!-- Gaug.es Analytics -->
+    <script>
+        var _gauges = _gauges || [];
+        (function () {
+            var t = document.createElement('script');
+            t.async = true;
+            t.id = 'gauges-tracker';
+            t.setAttribute('data-site-id', 'true');
+            t.setAttribute('data-track-path', 'https://track.gaug.es/track.gif');
+            t.src = 'https://d36ee2fcip1434.cloudfront.net/track.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(t, s);
+        })();
+    </script>
+    <!-- End Gaug.es Analytics -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </div>
+    <div class="site-search">
+        <div class="algolia-popup popup">
+            <div class="algolia-search">
+                <span class="algolia-search-input-icon"></span>
+                <div class="algolia-search-input" id="algolia-search-input"></div>
+            </div>
+
+            <div class="algolia-results">
+                <div id="algolia-stats"></div>
+                <div id="algolia-hits"></div>
+                <div id="algolia-pagination" class="algolia-pagination"></div>
+            </div>
+
+            <span class="popup-btn-close"></span>
+        </div>
+    </div>
+    <!-- hexo injector body_end start -->
+<script src="/js/insertHighlight.js"></script>
+<!-- hexo injector body_end end --></body>
+    </html>
+

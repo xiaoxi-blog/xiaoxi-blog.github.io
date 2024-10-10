@@ -1,0 +1,593 @@
+
+    <!DOCTYPE html>
+    <html lang="zh-CN"
+            
+          
+    >
+    <head>
+    <meta charset="utf-8">
+    
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=true"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+
+        gtag('js', new Date());
+
+        gtag('config', 'true');
+    </script>
+    <!-- End Google Analytics -->
+
+
+    
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+          var hm = document.createElement("script");
+          hm.src = "https://hm.baidu.com/hm.js?true";
+          var s = document.getElementsByTagName("script")[0]; 
+          s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+
+    
+    <title>
+        前端安全性：常见攻击方式及防范措施 |
+        
+        前端小溪呀</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Mulish:300,300italic,400,400italic,700,700italic%7CNoto%20Serif%20SC:300,300italic,400,400italic,700,700italic%7CUbuntu%20Mono:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+    
+<link rel="stylesheet" href="https://unpkg.com/@fortawesome/fontawesome-free/css/v4-font-face.min.css">
+
+    
+<link rel="stylesheet" href="/css/loader.css">
+
+    <meta name="description" content="前端安全性是现代 Web 应用程序中不可忽视的重要方面。在网络环境中，前端代码容易受到各种攻击，比如 XSS（跨站脚本攻击）、CSRF（跨站请求伪造）、点击劫持等。为了保护用户的数据和确保应用程序的安全，开发者需要采取一系列防范措施。本文将介绍常见的前端安全攻击方式，并提供相应的防范措施。  1. XSS（跨站脚本攻击） XSS 攻击是一种常见的 Web 攻击，攻击者通过注入恶意脚本来篡改网页内容">
+<meta property="og:type" content="article">
+<meta property="og:title" content="前端安全性：常见攻击方式及防范措施">
+<meta property="og:url" content="https://xiaoxi.mailjob.net/posts/2527210091.html">
+<meta property="og:site_name" content="前端小溪呀">
+<meta property="og:description" content="前端安全性是现代 Web 应用程序中不可忽视的重要方面。在网络环境中，前端代码容易受到各种攻击，比如 XSS（跨站脚本攻击）、CSRF（跨站请求伪造）、点击劫持等。为了保护用户的数据和确保应用程序的安全，开发者需要采取一系列防范措施。本文将介绍常见的前端安全攻击方式，并提供相应的防范措施。  1. XSS（跨站脚本攻击） XSS 攻击是一种常见的 Web 攻击，攻击者通过注入恶意脚本来篡改网页内容">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-05-16T11:17:38.000Z">
+<meta property="article:modified_time" content="2024-10-10T04:04:53.677Z">
+<meta property="article:author" content="左苗苗">
+<meta property="article:tag" content="blog">
+<meta name="twitter:card" content="summary">
+    
+        <link rel="alternate" href="/atom.xml" title="前端小溪呀" type="application/atom+xml">
+    
+    
+        <link rel="shortcut icon" href="/images/favicon.ico">
+    
+    
+        
+<link rel="stylesheet" href="https://unpkg.com/typeface-source-code-pro@1.1.13/index.css">
+
+    
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    
+        
+<link rel="stylesheet" href="https://unpkg.com/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css">
+
+    
+    
+        
+<link rel="stylesheet" href="https://unpkg.com/katex@0.16.7/dist/katex.min.css">
+
+    
+    
+    
+    
+<script src="https://unpkg.com/pace-js@1.2.4/pace.min.js"></script>
+
+    
+        
+<link rel="stylesheet" href="https://unpkg.com/wowjs@1.1.3/css/libs/animate.css">
+
+        
+<script src="https://unpkg.com/wowjs@1.1.3/dist/wow.min.js"></script>
+
+        <script>
+          new WOW({
+            offset: 0,
+            mobile: true,
+            live: false
+          }).init();
+        </script>
+    
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+    <body>
+    
+<div id='loader'>
+  <div class="loading-left-bg"></div>
+  <div class="loading-right-bg"></div>
+  <div class="spinner-box">
+    <div class="loading-taichi">
+      <svg width="150" height="150" viewBox="0 0 1024 1024" class="icon" version="1.1" xmlns="http://www.w3.org/2000/svg" shape-rendering="geometricPrecision">
+      <path d="M303.5 432A80 80 0 0 1 291.5 592A80 80 0 0 1 303.5 432z" fill="#ff6e6b" />
+      <path d="M512 65A447 447 0 0 1 512 959L512 929A417 417 0 0 0 512 95A417 417 0 0 0 512 929L512 959A447 447 0 0 1 512 65z" fill="#fd0d00" />
+      <path d="M512 95A417 417 0 0 1 929 512A208.5 208.5 0 0 1 720.5 720.5L720.5 592A80 80 0 0 0 720.5 432A80 80 0 0 0 720.5 592L720.5 720.5A208.5 208.5 0 0 1 512 512A208.5 208.5 0 0 0 303.5 303.5A208.5 208.5 0 0 0 95 512A417 417 0 0 1 512 95" fill="#fd0d00" />
+    </svg>
+    </div>
+    <div class="loading-word">Loading...</div>
+  </div>
+</div>
+</div>
+
+<script>
+  const endLoading = function() {
+    document.body.style.overflow = 'auto';
+    document.getElementById('loader').classList.add("loading");
+  }
+  window.addEventListener('load', endLoading);
+  document.getElementById('loader').addEventListener('click', endLoading);
+</script>
+
+
+    <div id="container">
+        <div id="wrap">
+            <header id="header">
+    
+        <img data-src="/images/banner.jpg" data-sizes="auto" alt="前端安全性：常见攻击方式及防范措施" class="lazyload">
+    
+    <div id="header-outer" class="outer">
+        <div id="header-title" class="inner">
+            <div id="logo-wrap">
+                
+                    
+                    
+                        <a href="/" id="logo"><h1>前端安全性：常见攻击方式及防范措施</h1></a>
+                    
+                
+            </div>
+            
+                
+                
+            
+        </div>
+        <div id="header-inner">
+            <nav id="main-nav">
+                <a id="main-nav-toggle" class="nav-icon"></a>
+                
+                    <span class="main-nav-link-wrap">
+                        <span class="main-nav-icon"></span>
+                        <a class="main-nav-link" href="/">首页</a>
+                    </span>
+                
+                    <span class="main-nav-link-wrap">
+                        <span class="main-nav-icon"></span>
+                        <a class="main-nav-link" href="/archives">归档</a>
+                    </span>
+                
+                    <span class="main-nav-link-wrap">
+                        <span class="main-nav-icon"></span>
+                        <a class="main-nav-link" href="/about">关于</a>
+                    </span>
+                
+                    <span class="main-nav-link-wrap">
+                        <span class="main-nav-icon"></span>
+                        <a class="main-nav-link" href="/friend">友链</a>
+                    </span>
+                
+            </nav>
+            <nav id="sub-nav">
+                
+                    <a id="nav-rss-link" class="nav-icon" href="/atom.xml"
+                       title="RSS 订阅"></a>
+                
+                
+            </nav>
+            <div id="search-form-wrap">
+                <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="搜索"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://xiaoxi.mailjob.net"></form>
+            </div>
+        </div>
+    </div>
+</header>
+
+            <div id="content" class="outer">
+                <section id="main"><article id="post-blog/前端安全性：常见攻击方式及防范措施" class="h-entry article article-type-post"
+         itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+    <div class="article-inner">
+        <div class="article-meta">
+            <div class="article-date wow slideInLeft">
+    <a href="/posts/2527210091.html" class="article-date-link">
+        <time datetime="2023-05-16T11:17:38.000Z"
+              itemprop="datePublished">2023-05-16</time>
+    </a>
+</div>
+
+            
+    <div class="article-category wow slideInLeft">
+        <a class="article-category-link" href="/categories/blog/">blog</a>
+    </div>
+
+
+        </div>
+        <div class="hr-line"></div>
+        
+
+        <div class="e-content article-entry" itemprop="articleBody">
+            
+                <p>前端安全性是现代 Web 应用程序中不可忽视的重要方面。在网络环境中，前端代码容易受到各种攻击，比如 XSS（跨站脚本攻击）、CSRF（跨站请求伪造）、点击劫持等。为了保护用户的数据和确保应用程序的安全，开发者需要采取一系列防范措施。本文将介绍常见的前端安全攻击方式，并提供相应的防范措施。</p>
+<h2 id="1-xss跨站脚本攻击"><a class="markdownIt-Anchor" href="#1-xss跨站脚本攻击"></a> 1. XSS（跨站脚本攻击）</h2>
+<p>XSS 攻击是一种常见的 Web 攻击，攻击者通过注入恶意脚本来篡改网页内容，盗取用户信息，甚至劫持用户会话。</p>
+<h3 id="攻击方式"><a class="markdownIt-Anchor" href="#攻击方式"></a> 攻击方式</h3>
+<ul>
+<li><strong>存储型 XSS</strong>：攻击者将恶意脚本存储到服务器上，当用户访问包含该脚本的页面时，恶意脚本被执行。</li>
+<li><strong>反射型 XSS</strong>：攻击者将恶意脚本作为参数附加到 URL 中，当用户点击包含恶意脚本的链接时，脚本被执行。</li>
+<li><strong>DOM 型 XSS</strong>：攻击者通过修改 DOM（文档对象模型）来执行恶意脚本。</li>
+</ul>
+<h3 id="防范措施"><a class="markdownIt-Anchor" href="#防范措施"></a> 防范措施</h3>
+<ul>
+<li><strong>输入验证和输出编码</strong>：对用户输入进行验证，确保输入的数据符合预期。在输出数据到页面时，使用合适的编码方式，如将 <code>&lt;</code> 转换为 <code>&amp;lt;</code> 等。</li>
+<li><strong>使用 CSP（内容安全策略）</strong>：CSP 可以指定页面允许加载的资源来源，限制脚本的执行，从而减少 XSS 攻击的可能性。</li>
+<li><strong>HttpOnly 和 Secure Cookie</strong>：使用 HttpOnly 和 Secure 标志来设置 Cookie，限制客户端脚本访问 Cookie，增加安全性。</li>
+</ul>
+<h2 id="2-csrf跨站请求伪造"><a class="markdownIt-Anchor" href="#2-csrf跨站请求伪造"></a> 2. CSRF（跨站请求伪造）</h2>
+<p>CSRF 攻击是一种利用用户身份在另一个网站上执行操作的攻击方式。</p>
+<h3 id="攻击方式-2"><a class="markdownIt-Anchor" href="#攻击方式-2"></a> 攻击方式</h3>
+<p>攻击者通过伪造请求，在用户登录过另一个网站时，执行攻击目标站点上的操作，如修改用户信息或发起转账请求。</p>
+<h3 id="防范措施-2"><a class="markdownIt-Anchor" href="#防范措施-2"></a> 防范措施</h3>
+<ul>
+<li><strong>CSRF Token</strong>：使用 CSRF Token 来验证请求的合法性，确保请求是来自本站的合法请求。</li>
+<li><strong>同源策略</strong>：遵循同源策略，确保不同域名的页面不能相互访问，从而阻止 CSRF 攻击。</li>
+</ul>
+<h2 id="3-点击劫持clickjacking"><a class="markdownIt-Anchor" href="#3-点击劫持clickjacking"></a> 3. 点击劫持（Clickjacking）</h2>
+<p>点击劫持是一种通过透明覆盖目标网页的方式，引诱用户在不知情的情况下点击恶意页面上的按钮或链接。</p>
+<h3 id="攻击方式-3"><a class="markdownIt-Anchor" href="#攻击方式-3"></a> 攻击方式</h3>
+<p>攻击者将目标网页放置在透明的 iframe 中，并在上面覆盖一个伪装成目标网页的恶意页面。用户在点击看似无害的内容时，实际上点击了恶意页面上的按钮。</p>
+<h3 id="防范措施-3"><a class="markdownIt-Anchor" href="#防范措施-3"></a> 防范措施</h3>
+<ul>
+<li><strong>X-Frame-Options 头</strong>：通过设置 X-Frame-Options 头，可以防止网页被嵌入到 iframe 中。</li>
+<li><strong>JavaScript 防御</strong>：使用 JavaScript 来防止网页被嵌套到 iframe 中，比如判断是否处于顶层窗口。</li>
+</ul>
+<h2 id="4-安全的跨域通信"><a class="markdownIt-Anchor" href="#4-安全的跨域通信"></a> 4. 安全的跨域通信</h2>
+<p>前端应用可能需要与其他域名下的服务进行通信，为了保证通信的安全性，需要采取一些措施。</p>
+<h3 id="防范措施-4"><a class="markdownIt-Anchor" href="#防范措施-4"></a> 防范措施</h3>
+<ul>
+<li><strong>CORS（跨域资源共享）</strong>：在服务器端设置合适的 CORS 头，以授权不同域的客户端进行跨域请求。</li>
+<li><strong>JSONP</strong>：使用 JSONP 可以实现跨域请求，但要注意防范 JSONP 的安全风险。</li>
+</ul>
+<h2 id="5-输入验证和数据加密"><a class="markdownIt-Anchor" href="#5-输入验证和数据加密"></a> 5. 输入验证和数据加密</h2>
+<p>在前端应用中，对用户输入进行验证是非常重要的，同时在传输敏感数据时，也要进行加密。</p>
+<h3 id="防范措施-5"><a class="markdownIt-Anchor" href="#防范措施-5"></a> 防范措施</h3>
+<ul>
+<li><strong>输入验证</strong>：对用户输入进行验证，确保输入的数据是合法的，防止注入攻击等。</li>
+<li><strong>数据加密</strong>：使用 HTTPS 来加密传输的数据，确保数据在传输过程中不被窃取或篡改。</li>
+</ul>
+<h2 id="结束语"><a class="markdownIt-Anchor" href="#结束语"></a> 结束语</h2>
+<p>前端安全性是任何 Web 应用程序中必须重视的问题。通过了解常见的攻击方式，并采取相应的防范措施，可以有效保护用户数据和应用程序的安全。同时，持续关注前端安全领域的最新发展，及时更新和优化防范措施，也是确保前端应用持续安全的重要举措。</p>
+
+            
+        </div>
+        <footer class="article-footer">
+            <a data-url="https://xiaoxi.mailjob.net/posts/2527210091.html" data-id="cm22rzbif0023bzn72hu07pq7" data-title="前端安全性：常见攻击方式及防范措施"
+               class="article-share-link">分享</a>
+            
+            
+            
+            
+    <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/blog/" rel="tag">blog</a></li></ul>
+
+
+        </footer>
+    </div>
+    
+        
+    <nav id="article-nav" class="wow fadeInUp">
+        
+            <div class="article-nav-link-wrap article-nav-link-left">
+                
+                    
+                    
+                        <img data-src="https://img.github.mailjob.net/202410101007825.jpg" data-sizes="auto" alt="如何实现一个简单的 MVC 框架" class="lazyload">
+                    
+                
+                <a href="/posts/100584857.html"></a>
+                <div class="article-nav-caption">前一篇</div>
+                <h3 class="article-nav-title">
+                    
+                        如何实现一个简单的 MVC 框架
+                    
+                </h3>
+            </div>
+        
+        
+            <div class="article-nav-link-wrap article-nav-link-right">
+                
+                    
+                    
+                        <img data-src="https://img.github.mailjob.net/202410101007825.jpg" data-sizes="auto" alt="TypeScript 入门指南：类型注解、接口和泛型" class="lazyload">
+                    
+                
+                <a href="/posts/3548623953.html"></a>
+                <div class="article-nav-caption">后一篇</div>
+                <h3 class="article-nav-title">
+                    
+                        TypeScript 入门指南：类型注解、接口和泛型
+                    
+                </h3>
+            </div>
+        
+    </nav>
+
+
+    
+</article>
+
+
+
+
+
+
+
+
+
+
+
+</section>
+                
+                    <aside id="sidebar">
+    <div class="sidebar-wrap wow fadeInRight">
+        <div class="sidebar-author">
+            <img data-src="/avatar/avatar.PNG" data-sizes="auto" alt="左苗苗" class="lazyload">
+            <div class="sidebar-author-name">左苗苗</div>
+            <div class="sidebar-description">欢迎来到前端小溪呀！这是一个专注于前端开发的个人博客，旨在分享我在前端领域的学习、实践和探索。我会不断分享我的项目经验、前沿工具和最佳实践，并记录下我在编码过程中的思考和灵感。</div>
+        </div>
+        <div class="sidebar-state">
+            <div class="sidebar-state-article">
+                <div>文章</div>
+                <div class="sidebar-state-number">62</div>
+            </div>
+            <div class="sidebar-state-category">
+                <div>分类</div>
+                <div class="sidebar-state-number">9</div>
+            </div>
+            <div class="sidebar-state-tag">
+                <div>标签</div>
+                <div class="sidebar-state-number">9</div>
+            </div>
+        </div>
+        <div class="sidebar-social">
+            
+                <div class=icon-github>
+                    <a href=https://github.com/miaomiaozuo itemprop="url" target="_blank"></a>
+                </div>
+            
+        </div>
+        <div class="sidebar-menu">
+            
+                <div class="sidebar-menu-link-wrap">
+                    <a class="sidebar-menu-link-dummy" href="/"></a>
+                    <span class="sidebar-menu-icon"></span>
+                    <div class="sidebar-menu-link">首页</div>
+                </div>
+            
+                <div class="sidebar-menu-link-wrap">
+                    <a class="sidebar-menu-link-dummy" href="/archives"></a>
+                    <span class="sidebar-menu-icon"></span>
+                    <div class="sidebar-menu-link">归档</div>
+                </div>
+            
+                <div class="sidebar-menu-link-wrap">
+                    <a class="sidebar-menu-link-dummy" href="/about"></a>
+                    <span class="sidebar-menu-icon"></span>
+                    <div class="sidebar-menu-link">关于</div>
+                </div>
+            
+                <div class="sidebar-menu-link-wrap">
+                    <a class="sidebar-menu-link-dummy" href="/friend"></a>
+                    <span class="sidebar-menu-icon"></span>
+                    <div class="sidebar-menu-link">友链</div>
+                </div>
+            
+        </div>
+    </div>
+    
+        
+    <div class="widget-wrap wow fadeInRight">
+        <h3 class="widget-title">分类</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/blog/">blog</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/css/">css</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/design/">design</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/js/">js</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/node/">node</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/react/">react</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/ts/">ts</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/vue/">vue</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/web/">web</a></li></ul>
+        </div>
+    </div>
+
+
+    
+        
+    <div class="widget-wrap wow fadeInRight">
+        <h3 class="widget-title">标签云</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/blog/" style="font-size: 18px;">blog</a> <a href="/tags/css/" style="font-size: 10px;">css</a> <a href="/tags/design/" style="font-size: 20px;">design</a> <a href="/tags/js/" style="font-size: 16px;">js</a> <a href="/tags/node/" style="font-size: 10px;">node</a> <a href="/tags/react/" style="font-size: 12px;">react</a> <a href="/tags/ts/" style="font-size: 12px;">ts</a> <a href="/tags/vue/" style="font-size: 12px;">vue</a> <a href="/tags/web/" style="font-size: 14px;">web</a>
+        </div>
+    </div>
+
+
+    
+        
+    <div class="widget-wrap wow fadeInRight">
+        <h3 class="widget-title">归档</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/10/">十月 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/07/">七月 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/05/">五月 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/04/">四月 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/03/">三月 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/01/">一月 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/12/">十二月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/11/">十一月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/09/">九月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/08/">八月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/07/">七月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/06/">六月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/03/">三月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/01/">一月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/12/">十二月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/11/">十一月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/08/">八月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/07/">七月 2021</a></li></ul>
+        </div>
+    </div>
+
+
+    
+</aside>
+
+                
+            </div>
+            <footer id="footer" class="wow fadeInUp">
+    <div style="width: 100%; overflow: hidden"><div class="footer-line"></div></div>
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            
+                All website licensed under <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank">CC BY 4.0</a></br>
+            
+            <div>
+                <span class="icon-copyright"></span>
+                2020-2024
+                <span class="footer-info-sep"></span>
+                左苗苗
+            </div>
+            
+            
+            
+        </div>
+    </div>
+</footer>
+
+        </div>
+        <nav id="mobile-nav">
+    <div class="sidebar-wrap">
+        <div class="sidebar-author">
+            <img data-src="/avatar/avatar.PNG" data-sizes="auto" alt="左苗苗" class="lazyload">
+            <div class="sidebar-author-name">左苗苗</div>
+            <div class="sidebar-description">欢迎来到前端小溪呀！这是一个专注于前端开发的个人博客，旨在分享我在前端领域的学习、实践和探索。我会不断分享我的项目经验、前沿工具和最佳实践，并记录下我在编码过程中的思考和灵感。</div>
+        </div>
+        <div class="sidebar-state">
+            <div class="sidebar-state-article">
+                <div>文章</div>
+                <div class="sidebar-state-number">62</div>
+            </div>
+            <div class="sidebar-state-category">
+                <div>分类</div>
+                <div class="sidebar-state-number">9</div>
+            </div>
+            <div class="sidebar-state-tag">
+                <div>标签</div>
+                <div class="sidebar-state-number">9</div>
+            </div>
+        </div>
+        <div class="sidebar-social">
+            
+                <div class=icon-github>
+                    <a href=https://github.com/miaomiaozuo itemprop="url" target="_blank"></a>
+                </div>
+            
+        </div>
+        <div class="sidebar-menu">
+            
+                <div class="sidebar-menu-link-wrap">
+                    <a class="sidebar-menu-link-dummy" href="/"></a>
+                    <span class="sidebar-menu-icon"></span>
+                    <div class="sidebar-menu-link">首页</div>
+                </div>
+            
+                <div class="sidebar-menu-link-wrap">
+                    <a class="sidebar-menu-link-dummy" href="/archives"></a>
+                    <span class="sidebar-menu-icon"></span>
+                    <div class="sidebar-menu-link">归档</div>
+                </div>
+            
+                <div class="sidebar-menu-link-wrap">
+                    <a class="sidebar-menu-link-dummy" href="/about"></a>
+                    <span class="sidebar-menu-icon"></span>
+                    <div class="sidebar-menu-link">关于</div>
+                </div>
+            
+                <div class="sidebar-menu-link-wrap">
+                    <a class="sidebar-menu-link-dummy" href="/friend"></a>
+                    <span class="sidebar-menu-icon"></span>
+                    <div class="sidebar-menu-link">友链</div>
+                </div>
+            
+        </div>
+    </div>
+</nav>
+
+        
+<script src="https://unpkg.com/jquery@3.7.0/dist/jquery.min.js"></script>
+
+
+<script src="https://unpkg.com/lazysizes@5.3.2/lazysizes.min.js"></script>
+
+
+<script src="https://unpkg.com/clipboard@2.0.11/dist/clipboard.min.js"></script>
+
+
+
+    
+<script src="https://unpkg.com/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+
+
+
+
+
+    
+<script src="https://unpkg.com/mermaid@9.4.3/dist/mermaid.min.js"></script>
+
+    <script>
+        if (window.mermaid) {
+            mermaid.initialize({theme: 'forest'});
+        }
+    </script>
+
+
+
+<script src="/js/script.js"></script>
+
+
+    <!-- Gaug.es Analytics -->
+    <script>
+        var _gauges = _gauges || [];
+        (function () {
+            var t = document.createElement('script');
+            t.async = true;
+            t.id = 'gauges-tracker';
+            t.setAttribute('data-site-id', 'true');
+            t.setAttribute('data-track-path', 'https://track.gaug.es/track.gif');
+            t.src = 'https://d36ee2fcip1434.cloudfront.net/track.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(t, s);
+        })();
+    </script>
+    <!-- End Gaug.es Analytics -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </div>
+    <div class="site-search">
+        <div class="algolia-popup popup">
+            <div class="algolia-search">
+                <span class="algolia-search-input-icon"></span>
+                <div class="algolia-search-input" id="algolia-search-input"></div>
+            </div>
+
+            <div class="algolia-results">
+                <div id="algolia-stats"></div>
+                <div id="algolia-hits"></div>
+                <div id="algolia-pagination" class="algolia-pagination"></div>
+            </div>
+
+            <span class="popup-btn-close"></span>
+        </div>
+    </div>
+    <!-- hexo injector body_end start -->
+<script src="/js/insertHighlight.js"></script>
+<!-- hexo injector body_end end --></body>
+    </html>
+

@@ -1,0 +1,866 @@
+
+    <!DOCTYPE html>
+    <html lang="zh-CN"
+            
+          
+    >
+    <head>
+    <meta charset="utf-8">
+    
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=true"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+
+        gtag('js', new Date());
+
+        gtag('config', 'true');
+    </script>
+    <!-- End Google Analytics -->
+
+
+    
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+          var hm = document.createElement("script");
+          hm.src = "https://hm.baidu.com/hm.js?true";
+          var s = document.getElementsByTagName("script")[0]; 
+          s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+
+    
+    <title>
+        
+        前端小溪呀</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Mulish:300,300italic,400,400italic,700,700italic%7CNoto%20Serif%20SC:300,300italic,400,400italic,700,700italic%7CUbuntu%20Mono:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+    
+<link rel="stylesheet" href="https://unpkg.com/@fortawesome/fontawesome-free/css/v4-font-face.min.css">
+
+    
+<link rel="stylesheet" href="/css/loader.css">
+
+    <meta name="description" content="欢迎来到前端小溪呀！这是一个专注于前端开发的个人博客，旨在分享我在前端领域的学习、实践和探索。我会不断分享我的项目经验、前沿工具和最佳实践，并记录下我在编码过程中的思考和灵感。">
+<meta property="og:type" content="website">
+<meta property="og:title" content="前端小溪呀">
+<meta property="og:url" content="https://xiaoxi.mailjob.net/page/4/index.html">
+<meta property="og:site_name" content="前端小溪呀">
+<meta property="og:description" content="欢迎来到前端小溪呀！这是一个专注于前端开发的个人博客，旨在分享我在前端领域的学习、实践和探索。我会不断分享我的项目经验、前沿工具和最佳实践，并记录下我在编码过程中的思考和灵感。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:author" content="左苗苗">
+<meta property="article:tag" content="前端小溪呀,左苗苗,web,html,js,jquery,vue,css,react,typescript,javascript">
+<meta name="twitter:card" content="summary">
+    
+        <link rel="alternate" href="/atom.xml" title="前端小溪呀" type="application/atom+xml">
+    
+    
+        <link rel="shortcut icon" href="/images/favicon.ico">
+    
+    
+        
+<link rel="stylesheet" href="https://unpkg.com/typeface-source-code-pro@1.1.13/index.css">
+
+    
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    
+        
+<link rel="stylesheet" href="https://unpkg.com/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css">
+
+    
+    
+        
+<link rel="stylesheet" href="https://unpkg.com/katex@0.16.7/dist/katex.min.css">
+
+    
+    
+    
+    
+<script src="https://unpkg.com/pace-js@1.2.4/pace.min.js"></script>
+
+    
+        
+<link rel="stylesheet" href="https://unpkg.com/wowjs@1.1.3/css/libs/animate.css">
+
+        
+<script src="https://unpkg.com/wowjs@1.1.3/dist/wow.min.js"></script>
+
+        <script>
+          new WOW({
+            offset: 0,
+            mobile: true,
+            live: false
+          }).init();
+        </script>
+    
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+    <body>
+    
+<div id='loader'>
+  <div class="loading-left-bg"></div>
+  <div class="loading-right-bg"></div>
+  <div class="spinner-box">
+    <div class="loading-taichi">
+      <svg width="150" height="150" viewBox="0 0 1024 1024" class="icon" version="1.1" xmlns="http://www.w3.org/2000/svg" shape-rendering="geometricPrecision">
+      <path d="M303.5 432A80 80 0 0 1 291.5 592A80 80 0 0 1 303.5 432z" fill="#ff6e6b" />
+      <path d="M512 65A447 447 0 0 1 512 959L512 929A417 417 0 0 0 512 95A417 417 0 0 0 512 929L512 959A447 447 0 0 1 512 65z" fill="#fd0d00" />
+      <path d="M512 95A417 417 0 0 1 929 512A208.5 208.5 0 0 1 720.5 720.5L720.5 592A80 80 0 0 0 720.5 432A80 80 0 0 0 720.5 592L720.5 720.5A208.5 208.5 0 0 1 512 512A208.5 208.5 0 0 0 303.5 303.5A208.5 208.5 0 0 0 95 512A417 417 0 0 1 512 95" fill="#fd0d00" />
+    </svg>
+    </div>
+    <div class="loading-word">Loading...</div>
+  </div>
+</div>
+</div>
+
+<script>
+  const endLoading = function() {
+    document.body.style.overflow = 'auto';
+    document.getElementById('loader').classList.add("loading");
+  }
+  window.addEventListener('load', endLoading);
+  document.getElementById('loader').addEventListener('click', endLoading);
+</script>
+
+
+    <div id="container">
+        <div id="wrap">
+            <header id="header">
+    
+        <img data-src="/images/banner.jpg" data-sizes="auto" alt="" class="lazyload">
+    
+    <div id="header-outer" class="outer">
+        <div id="header-title" class="inner">
+            <div id="logo-wrap">
+                
+                    
+                    
+                        <a href="/" id="logo"><h1>前端小溪呀</h1></a>
+                    
+                
+            </div>
+            
+                
+                
+                    <h2 id="subtitle-wrap">
+                        <a href="/" id="subtitle">探索前端世界的小溪，记录技术与灵感的交汇之地</a>
+                    </h2>
+                
+            
+        </div>
+        <div id="header-inner">
+            <nav id="main-nav">
+                <a id="main-nav-toggle" class="nav-icon"></a>
+                
+                    <span class="main-nav-link-wrap">
+                        <span class="main-nav-icon"></span>
+                        <a class="main-nav-link" href="/">首页</a>
+                    </span>
+                
+                    <span class="main-nav-link-wrap">
+                        <span class="main-nav-icon"></span>
+                        <a class="main-nav-link" href="/archives">归档</a>
+                    </span>
+                
+                    <span class="main-nav-link-wrap">
+                        <span class="main-nav-icon"></span>
+                        <a class="main-nav-link" href="/about">关于</a>
+                    </span>
+                
+                    <span class="main-nav-link-wrap">
+                        <span class="main-nav-icon"></span>
+                        <a class="main-nav-link" href="/friend">友链</a>
+                    </span>
+                
+            </nav>
+            <nav id="sub-nav">
+                
+                    <a id="nav-rss-link" class="nav-icon" href="/atom.xml"
+                       title="RSS 订阅"></a>
+                
+                
+            </nav>
+            <div id="search-form-wrap">
+                <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="搜索"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://xiaoxi.mailjob.net"></form>
+            </div>
+        </div>
+    </div>
+</header>
+
+            <div id="content" class="outer">
+                <section id="main">
+    
+        
+    <div class="post-wrap-left wow fadeInUp">
+        
+            <a class="post-link" href="/posts/5024741.html"></a>
+        
+        
+        <div class="post-cover-left">
+            
+                
+                
+                    <img data-src="https://img.github.mailjob.net/202410101007825.jpg" data-sizes="auto" alt="手把手教你创建一个简单的React/Vue.js组件" class="lazyload">
+                
+            
+
+        </div>
+        <div class="post-info">
+            <div class="post-meta">
+                <a><span class="icon-calendar"></span>2022-07-26</a>
+                
+                    <a><span class="icon-pencil"></span>1.2k 字</a>
+                
+                
+                    <a><span class="icon-clock"></span>5 分钟</a>
+                
+            </div>
+            <h2 class="post-title">手把手教你创建一个简单的React/Vue.js组件</h2>
+            <article class="post-article">
+                
+                     1. 引言
+React和Vue.js是当今最流行的前端框架之一，它们为开发者提供了创建交互式、响应式的用户界面的能力。本文将分别手把手教你创建一个简单的React和Vue.js组件，让你快速上手这两个框架，并理解它们的基本工作原理。
+ 2. 创建React组件
+React是由Facebook开发的一款用于构建用户界面的JavaScript库。在创建React组件之前，我们需要确保已经安装了Node.js和npm。
+ 2.1 创建新的React项目
+首先，我们使用Create React App工具来创建一个新的React项目。在命令行中执行以下命令：
+12npx create-react-a
+                
+            </article>
+        </div>
+    </div>
+
+
+    
+        
+    <div class="post-wrap-right wow fadeInUp">
+        
+            <a class="post-link" href="/posts/2395788194.html"></a>
+        
+        <div class="post-cover-right">
+            
+                
+                
+                    <img data-src="https://img.github.mailjob.net/202410101007825.jpg" data-sizes="auto" alt="JavaScript 中的错误处理与调试技巧" class="lazyload">
+                
+            
+        </div>
+        <div class="post-info">
+            <div class="post-meta">
+                <a><span class="icon-calendar"></span>2022-07-26</a>
+                
+                    <a><span class="icon-pencil"></span>893 字</a>
+                
+                
+                    <a><span class="icon-clock"></span>3 分钟</a>
+                
+            </div>
+            <h2 class="post-title">JavaScript 中的错误处理与调试技巧</h2>
+            <article class="post-article">
+                
+                    在 JavaScript 中，错误处理和调试是开发过程中非常重要的一部分。良好的错误处理可以使你的应用程序更加稳定和健壮，而高效的调试技巧可以帮助你快速定位和解决问题。本文将介绍 JavaScript 中的错误处理和调试技巧。
+ 1. 错误处理
+ 1.1 try-catch 块
+使用 try-catch 块可以捕获和处理异常，防止错误导致整个应用崩溃。
+1234567try &amp;#123;  // 可能会抛出异常的代码块  throw new Error(&amp;#x27;Something went wrong!&amp;#x27;);&amp;#125; catch (error) &amp;#123;  // 处理异常
+                
+            </article>
+        </div>
+    </div>
+
+
+    
+        
+    <div class="post-wrap-left wow fadeInUp">
+        
+            <a class="post-link" href="/posts/2281619218.html"></a>
+        
+        
+        <div class="post-cover-left">
+            
+                
+                
+                    <img data-src="https://img.github.mailjob.net/202410101007825.jpg" data-sizes="auto" alt="前端实现设计模式之代理模式" class="lazyload">
+                
+            
+
+        </div>
+        <div class="post-info">
+            <div class="post-meta">
+                <a><span class="icon-calendar"></span>2022-07-22</a>
+                
+                    <a><span class="icon-pencil"></span>1.3k 字</a>
+                
+                
+                    <a><span class="icon-clock"></span>4 分钟</a>
+                
+            </div>
+            <h2 class="post-title">前端实现设计模式之代理模式</h2>
+            <article class="post-article">
+                
+                     引言
+代理模式（Proxy Pattern）是一种结构型设计模式，它通过创建一个代理对象来控制对原始对象的访问。代理对象充当了客户端和目标对象之间的中介，可以在访问目标对象前后进行一些额外的操作。在前端开发中，代理模式常用于网络请求、事件处理和资源加载等场景。本文将介绍如何在前端中实现代理模式，并提供具体的代码示例和解读。
+ 代理模式概述
+代理模式属于结构型设计模式的一种，它通过引入一个代理对象来控制对原始对象的访问。代理对象和原始对象具有相同的接口，客户端通过代理对象来访问目标对象。代理对象可以在访问目标对象前后进行一些额外的操作，例如权限验证、缓存、日志记录等。
+代理模式由以下几个主要角
+                
+            </article>
+        </div>
+    </div>
+
+
+    
+        
+    <div class="post-wrap-right wow fadeInUp">
+        
+            <a class="post-link" href="/posts/489822280.html"></a>
+        
+        <div class="post-cover-right">
+            
+                
+                
+                    <img data-src="https://img.github.mailjob.net/202410101007825.jpg" data-sizes="auto" alt="前端实现设计模式之享元模式" class="lazyload">
+                
+            
+        </div>
+        <div class="post-info">
+            <div class="post-meta">
+                <a><span class="icon-calendar"></span>2022-07-19</a>
+                
+                    <a><span class="icon-pencil"></span>1.5k 字</a>
+                
+                
+                    <a><span class="icon-clock"></span>5 分钟</a>
+                
+            </div>
+            <h2 class="post-title">前端实现设计模式之享元模式</h2>
+            <article class="post-article">
+                
+                     引言
+享元模式（Flyweight Pattern）是一种结构型设计模式，用于优化大量细粒度对象的共享和重复使用，以节省内存和提高性能。在前端开发中，当需要创建大量相似的对象时，使用享元模式可以有效地减少内存占用和提升性能。本文将介绍如何在前端中实现享元模式，并提供具体的代码示例和解读。
+ 享元模式概述
+享元模式属于结构型设计模式的一种，它通过共享细粒度的对象，以减少内存占用和提高性能。享元模式的核心思想是将对象的状态分为内部状态（Intrinsic State）和外部状态（Extrinsic State）。内部状态是对象可共享的部分，它独立于对象的上下文，可以被多个对象共享；而外部状态是对
+                
+            </article>
+        </div>
+    </div>
+
+
+    
+        
+    <div class="post-wrap-left wow fadeInUp">
+        
+            <a class="post-link" href="/posts/191970218.html"></a>
+        
+        
+        <div class="post-cover-left">
+            
+                
+                
+                    <img data-src="https://img.github.mailjob.net/202410101007825.jpg" data-sizes="auto" alt="前端实现设计模式之外观模式" class="lazyload">
+                
+            
+
+        </div>
+        <div class="post-info">
+            <div class="post-meta">
+                <a><span class="icon-calendar"></span>2022-07-18</a>
+                
+                    <a><span class="icon-pencil"></span>1.2k 字</a>
+                
+                
+                    <a><span class="icon-clock"></span>4 分钟</a>
+                
+            </div>
+            <h2 class="post-title">前端实现设计模式之外观模式</h2>
+            <article class="post-article">
+                
+                     引言
+外观模式（Facade Pattern）是一种结构型设计模式，它提供了一个统一的接口，用于访问子系统中的一组接口。外观模式通过封装复杂的子系统，简化了客户端与子系统之间的交互，提供了一个更简单、更高层次的接口。在前端开发中，外观模式常用于简化复杂的 API 调用，提供一个简单易用的接口供开发者使用。本文将介绍如何在前端中实现外观模式，并提供具体的代码示例和解读。
+ 外观模式概述
+外观模式属于结构型设计模式的一种，它通过提供一个简化的接口，封装了一个或多个复杂的子系统，从而简化了客户端与子系统之间的交互。外观模式由以下几个主要角色组成：
+
+外观（Facade）：提供一个简化的接口，封装了
+                
+            </article>
+        </div>
+    </div>
+
+
+    
+        
+    <div class="post-wrap-right wow fadeInUp">
+        
+            <a class="post-link" href="/posts/602588692.html"></a>
+        
+        <div class="post-cover-right">
+            
+                
+                
+                    <img data-src="https://img.github.mailjob.net/202410101007825.jpg" data-sizes="auto" alt="前端实现设计模式之装饰器模式" class="lazyload">
+                
+            
+        </div>
+        <div class="post-info">
+            <div class="post-meta">
+                <a><span class="icon-calendar"></span>2022-07-15</a>
+                
+                    <a><span class="icon-pencil"></span>1.3k 字</a>
+                
+                
+                    <a><span class="icon-clock"></span>4 分钟</a>
+                
+            </div>
+            <h2 class="post-title">前端实现设计模式之装饰器模式</h2>
+            <article class="post-article">
+                
+                     引言
+装饰器模式（Decorator Pattern）是一种结构型设计模式，它允许在不改变对象结构的前提下，动态地添加功能和行为。装饰器模式通过将对象包装在一个装饰器对象中，从而在运行时扩展对象的功能。在前端开发中，装饰器模式常用于动态地修改组件或对象的行为，而无需修改原始对象的代码。本文将介绍如何在前端中实现装饰器模式，并提供具体的代码示例和解读。
+ 装饰器模式概述
+装饰器模式属于结构型设计模式的一种，它通过包装对象来动态地添加新的行为和功能，同时保持对象接口的一致性。装饰器模式由以下几个主要角色组成：
+
+组件（Component）：定义对象的接口，可以是抽象类或接口。
+原始组件（Conc
+                
+            </article>
+        </div>
+    </div>
+
+
+    
+        
+    <div class="post-wrap-left wow fadeInUp">
+        
+            <a class="post-link" href="/posts/589833872.html"></a>
+        
+        
+        <div class="post-cover-left">
+            
+                
+                
+                    <img data-src="https://img.github.mailjob.net/202410101007825.jpg" data-sizes="auto" alt="前端实现设计模式之组合模式" class="lazyload">
+                
+            
+
+        </div>
+        <div class="post-info">
+            <div class="post-meta">
+                <a><span class="icon-calendar"></span>2022-07-12</a>
+                
+                    <a><span class="icon-pencil"></span>1.3k 字</a>
+                
+                
+                    <a><span class="icon-clock"></span>5 分钟</a>
+                
+            </div>
+            <h2 class="post-title">前端实现设计模式之组合模式</h2>
+            <article class="post-article">
+                
+                     引言
+组合模式（Composite Pattern）是一种结构型设计模式，它允许将对象组合成树形结构以表示&amp;quot;部分-整体&amp;quot;的层次结构。组合模式使得用户对单个对象和组合对象的使用具有一致性，可以以相同的方式处理它们。在前端开发中，组合模式常用于处理嵌套的组件结构，使得组件可以以统一的方式进行操作和管理。本文将介绍如何在前端中实现组合模式，并提供具体的代码示例和解读。
+ 组合模式概述
+组合模式属于结构型设计模式的一种，它通过将对象组合成树形结构，以表示&amp;quot;部分-整体&amp;quot;的层次结构。组合模式由以下几个主要角色组成：
+
+组件（Component）：定义组合中的对象的
+                
+            </article>
+        </div>
+    </div>
+
+
+    
+        
+    <div class="post-wrap-right wow fadeInUp">
+        
+            <a class="post-link" href="/posts/2862471646.html"></a>
+        
+        <div class="post-cover-right">
+            
+                
+                
+                    <img data-src="https://img.github.mailjob.net/202410101007825.jpg" data-sizes="auto" alt="前端实现设计模式之桥接模式" class="lazyload">
+                
+            
+        </div>
+        <div class="post-info">
+            <div class="post-meta">
+                <a><span class="icon-calendar"></span>2022-07-11</a>
+                
+                    <a><span class="icon-pencil"></span>1.3k 字</a>
+                
+                
+                    <a><span class="icon-clock"></span>4 分钟</a>
+                
+            </div>
+            <h2 class="post-title">前端实现设计模式之桥接模式</h2>
+            <article class="post-article">
+                
+                     引言
+桥接模式（Bridge Pattern）是一种结构型设计模式，它将抽象部分与实现部分分离，使它们可以独立地变化。桥接模式通过组合的方式，将抽象和实现解耦，从而使得它们可以独立地进行扩展和变化。在前端开发中，桥接模式常用于处理多维度的变化，例如不同的样式和主题组合、不同的数据源和展示方式等。本文将介绍如何在前端中实现桥接模式，并提供具体的代码示例和解读。
+ 桥接模式概述
+桥接模式属于结构型设计模式的一种，它通过将抽象部分和实现部分分离，使它们可以独立地变化。桥接模式由以下几个主要角色组成：
+
+抽象类（Abstraction）：定义抽象部分的接口，通常包含对实现部分的引用。
+扩展抽象类（R
+                
+            </article>
+        </div>
+    </div>
+
+
+    
+        
+    <div class="post-wrap-left wow fadeInUp">
+        
+            <a class="post-link" href="/posts/1308016888.html"></a>
+        
+        
+        <div class="post-cover-left">
+            
+                
+                
+                    <img data-src="https://img.github.mailjob.net/202410101007825.jpg" data-sizes="auto" alt="前端实现设计模式之适配器模式" class="lazyload">
+                
+            
+
+        </div>
+        <div class="post-info">
+            <div class="post-meta">
+                <a><span class="icon-calendar"></span>2022-07-10</a>
+                
+                    <a><span class="icon-pencil"></span>1.4k 字</a>
+                
+                
+                    <a><span class="icon-clock"></span>5 分钟</a>
+                
+            </div>
+            <h2 class="post-title">前端实现设计模式之适配器模式</h2>
+            <article class="post-article">
+                
+                     引言
+适配器模式（Adapter Pattern）是一种结构型设计模式，它允许将一个类的接口转换成客户端所期望的另一个接口。适配器模式常用于解决两个不兼容接口之间的兼容性问题。在前端开发中，适配器模式可以帮助我们将不同的数据格式、API 或组件进行适配，以便在不修改原有代码的情况下实现互操作性。本文将介绍如何在前端中实现适配器模式，并提供具体的代码示例和解读。
+ 适配器模式概述
+适配器模式属于结构型设计模式的一种，它通过创建一个适配器类，将一个类的接口转换成客户端所期望的另一个接口。适配器模式由以下几个主要角色组成：
+
+目标接口（Target）：定义客户端所期望的接口。
+适配者类（Adapt
+                
+            </article>
+        </div>
+    </div>
+
+
+    
+        
+    <div class="post-wrap-right wow fadeInUp">
+        
+            <a class="post-link" href="/posts/2551998915.html"></a>
+        
+        <div class="post-cover-right">
+            
+                
+                
+                    <img data-src="https://img.github.mailjob.net/202410101007825.jpg" data-sizes="auto" alt="React 组件生命周期及优化技巧" class="lazyload">
+                
+            
+        </div>
+        <div class="post-info">
+            <div class="post-meta">
+                <a><span class="icon-calendar"></span>2022-07-06</a>
+                
+                    <a><span class="icon-pencil"></span>973 字</a>
+                
+                
+                    <a><span class="icon-clock"></span>3 分钟</a>
+                
+            </div>
+            <h2 class="post-title">React 组件生命周期及优化技巧</h2>
+            <article class="post-article">
+                
+                    在 React 中，组件生命周期是组件从创建到销毁的一系列过程。在这个过程中，React 提供了许多钩子函数，允许我们在组件的不同阶段执行特定的操作。优化组件生命周期可以提高应用程序性能和用户体验。下面是 React 组件生命周期及优化技巧的详细介绍：
+ 组件生命周期
+ 1. Mounting 阶段
+这是组件被创建并插入 DOM 的阶段。
+
+constructor()：组件的构造函数，用于初始化 state 和绑定事件处理程序。
+static getDerivedStateFromProps()：从 props 中派生状态的静态方法，用于在渲染前更新状态。
+render()：渲染组件的内容，通
+                
+            </article>
+        </div>
+    </div>
+
+
+    
+
+
+    <nav id="page-nav" class="wow fadeInUp">
+        
+        <a class="extend prev" rel="prev" href="/page/3/">&laquo; 上一页</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><a class="page-number" href="/page/7/">7</a><a class="extend next" rel="next" href="/page/5/">下一页 &raquo;</a>
+    </nav>
+
+
+</section>
+                
+                    <aside id="sidebar">
+    <div class="sidebar-wrap wow fadeInRight">
+        <div class="sidebar-author">
+            <img data-src="/avatar/avatar.PNG" data-sizes="auto" alt="左苗苗" class="lazyload">
+            <div class="sidebar-author-name">左苗苗</div>
+            <div class="sidebar-description">欢迎来到前端小溪呀！这是一个专注于前端开发的个人博客，旨在分享我在前端领域的学习、实践和探索。我会不断分享我的项目经验、前沿工具和最佳实践，并记录下我在编码过程中的思考和灵感。</div>
+        </div>
+        <div class="sidebar-state">
+            <div class="sidebar-state-article">
+                <div>文章</div>
+                <div class="sidebar-state-number">62</div>
+            </div>
+            <div class="sidebar-state-category">
+                <div>分类</div>
+                <div class="sidebar-state-number">9</div>
+            </div>
+            <div class="sidebar-state-tag">
+                <div>标签</div>
+                <div class="sidebar-state-number">9</div>
+            </div>
+        </div>
+        <div class="sidebar-social">
+            
+                <div class=icon-github>
+                    <a href=https://github.com/miaomiaozuo itemprop="url" target="_blank"></a>
+                </div>
+            
+        </div>
+        <div class="sidebar-menu">
+            
+                <div class="sidebar-menu-link-wrap">
+                    <a class="sidebar-menu-link-dummy" href="/"></a>
+                    <span class="sidebar-menu-icon"></span>
+                    <div class="sidebar-menu-link">首页</div>
+                </div>
+            
+                <div class="sidebar-menu-link-wrap">
+                    <a class="sidebar-menu-link-dummy" href="/archives"></a>
+                    <span class="sidebar-menu-icon"></span>
+                    <div class="sidebar-menu-link">归档</div>
+                </div>
+            
+                <div class="sidebar-menu-link-wrap">
+                    <a class="sidebar-menu-link-dummy" href="/about"></a>
+                    <span class="sidebar-menu-icon"></span>
+                    <div class="sidebar-menu-link">关于</div>
+                </div>
+            
+                <div class="sidebar-menu-link-wrap">
+                    <a class="sidebar-menu-link-dummy" href="/friend"></a>
+                    <span class="sidebar-menu-icon"></span>
+                    <div class="sidebar-menu-link">友链</div>
+                </div>
+            
+        </div>
+    </div>
+    
+        
+    <div class="widget-wrap wow fadeInRight">
+        <h3 class="widget-title">分类</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/blog/">blog</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/css/">css</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/design/">design</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/js/">js</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/node/">node</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/react/">react</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/ts/">ts</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/vue/">vue</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/web/">web</a></li></ul>
+        </div>
+    </div>
+
+
+    
+        
+    <div class="widget-wrap wow fadeInRight">
+        <h3 class="widget-title">标签云</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/blog/" style="font-size: 18px;">blog</a> <a href="/tags/css/" style="font-size: 10px;">css</a> <a href="/tags/design/" style="font-size: 20px;">design</a> <a href="/tags/js/" style="font-size: 16px;">js</a> <a href="/tags/node/" style="font-size: 10px;">node</a> <a href="/tags/react/" style="font-size: 12px;">react</a> <a href="/tags/ts/" style="font-size: 12px;">ts</a> <a href="/tags/vue/" style="font-size: 12px;">vue</a> <a href="/tags/web/" style="font-size: 14px;">web</a>
+        </div>
+    </div>
+
+
+    
+        
+    <div class="widget-wrap wow fadeInRight">
+        <h3 class="widget-title">归档</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/10/">十月 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/07/">七月 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/05/">五月 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/04/">四月 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/03/">三月 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/01/">一月 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/12/">十二月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/11/">十一月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/09/">九月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/08/">八月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/07/">七月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/06/">六月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/03/">三月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/01/">一月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/12/">十二月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/11/">十一月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/08/">八月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/07/">七月 2021</a></li></ul>
+        </div>
+    </div>
+
+
+    
+</aside>
+
+                
+            </div>
+            <footer id="footer" class="wow fadeInUp">
+    <div style="width: 100%; overflow: hidden"><div class="footer-line"></div></div>
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            
+                All website licensed under <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank">CC BY 4.0</a></br>
+            
+            <div>
+                <span class="icon-copyright"></span>
+                2020-2024
+                <span class="footer-info-sep"></span>
+                左苗苗
+            </div>
+            
+            
+            
+        </div>
+    </div>
+</footer>
+
+        </div>
+        <nav id="mobile-nav">
+    <div class="sidebar-wrap">
+        <div class="sidebar-author">
+            <img data-src="/avatar/avatar.PNG" data-sizes="auto" alt="左苗苗" class="lazyload">
+            <div class="sidebar-author-name">左苗苗</div>
+            <div class="sidebar-description">欢迎来到前端小溪呀！这是一个专注于前端开发的个人博客，旨在分享我在前端领域的学习、实践和探索。我会不断分享我的项目经验、前沿工具和最佳实践，并记录下我在编码过程中的思考和灵感。</div>
+        </div>
+        <div class="sidebar-state">
+            <div class="sidebar-state-article">
+                <div>文章</div>
+                <div class="sidebar-state-number">62</div>
+            </div>
+            <div class="sidebar-state-category">
+                <div>分类</div>
+                <div class="sidebar-state-number">9</div>
+            </div>
+            <div class="sidebar-state-tag">
+                <div>标签</div>
+                <div class="sidebar-state-number">9</div>
+            </div>
+        </div>
+        <div class="sidebar-social">
+            
+                <div class=icon-github>
+                    <a href=https://github.com/miaomiaozuo itemprop="url" target="_blank"></a>
+                </div>
+            
+        </div>
+        <div class="sidebar-menu">
+            
+                <div class="sidebar-menu-link-wrap">
+                    <a class="sidebar-menu-link-dummy" href="/"></a>
+                    <span class="sidebar-menu-icon"></span>
+                    <div class="sidebar-menu-link">首页</div>
+                </div>
+            
+                <div class="sidebar-menu-link-wrap">
+                    <a class="sidebar-menu-link-dummy" href="/archives"></a>
+                    <span class="sidebar-menu-icon"></span>
+                    <div class="sidebar-menu-link">归档</div>
+                </div>
+            
+                <div class="sidebar-menu-link-wrap">
+                    <a class="sidebar-menu-link-dummy" href="/about"></a>
+                    <span class="sidebar-menu-icon"></span>
+                    <div class="sidebar-menu-link">关于</div>
+                </div>
+            
+                <div class="sidebar-menu-link-wrap">
+                    <a class="sidebar-menu-link-dummy" href="/friend"></a>
+                    <span class="sidebar-menu-icon"></span>
+                    <div class="sidebar-menu-link">友链</div>
+                </div>
+            
+        </div>
+    </div>
+</nav>
+
+        
+<script src="https://unpkg.com/jquery@3.7.0/dist/jquery.min.js"></script>
+
+
+<script src="https://unpkg.com/lazysizes@5.3.2/lazysizes.min.js"></script>
+
+
+<script src="https://unpkg.com/clipboard@2.0.11/dist/clipboard.min.js"></script>
+
+
+
+    
+<script src="https://unpkg.com/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+
+
+
+
+
+    
+<script src="https://unpkg.com/mermaid@9.4.3/dist/mermaid.min.js"></script>
+
+    <script>
+        if (window.mermaid) {
+            mermaid.initialize({theme: 'forest'});
+        }
+    </script>
+
+
+
+<script src="/js/script.js"></script>
+
+
+    <!-- Gaug.es Analytics -->
+    <script>
+        var _gauges = _gauges || [];
+        (function () {
+            var t = document.createElement('script');
+            t.async = true;
+            t.id = 'gauges-tracker';
+            t.setAttribute('data-site-id', 'true');
+            t.setAttribute('data-track-path', 'https://track.gaug.es/track.gif');
+            t.src = 'https://d36ee2fcip1434.cloudfront.net/track.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(t, s);
+        })();
+    </script>
+    <!-- End Gaug.es Analytics -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </div>
+    <div class="site-search">
+        <div class="algolia-popup popup">
+            <div class="algolia-search">
+                <span class="algolia-search-input-icon"></span>
+                <div class="algolia-search-input" id="algolia-search-input"></div>
+            </div>
+
+            <div class="algolia-results">
+                <div id="algolia-stats"></div>
+                <div id="algolia-hits"></div>
+                <div id="algolia-pagination" class="algolia-pagination"></div>
+            </div>
+
+            <span class="popup-btn-close"></span>
+        </div>
+    </div>
+    <!-- hexo injector body_end start -->
+<script src="/js/insertHighlight.js"></script>
+<!-- hexo injector body_end end --></body>
+    </html>
+

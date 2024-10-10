@@ -1,0 +1,622 @@
+
+    <!DOCTYPE html>
+    <html lang="zh-CN"
+            
+          
+    >
+    <head>
+    <meta charset="utf-8">
+    
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=true"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+
+        gtag('js', new Date());
+
+        gtag('config', 'true');
+    </script>
+    <!-- End Google Analytics -->
+
+
+    
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+          var hm = document.createElement("script");
+          hm.src = "https://hm.baidu.com/hm.js?true";
+          var s = document.getElementsByTagName("script")[0]; 
+          s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+
+    
+    <title>
+        Service Worker实现离线缓存和推送通知 |
+        
+        前端小溪呀</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Mulish:300,300italic,400,400italic,700,700italic%7CNoto%20Serif%20SC:300,300italic,400,400italic,700,700italic%7CUbuntu%20Mono:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+    
+<link rel="stylesheet" href="https://unpkg.com/@fortawesome/fontawesome-free/css/v4-font-face.min.css">
+
+    
+<link rel="stylesheet" href="/css/loader.css">
+
+    <meta name="description" content="引言 离线缓存和推送通知在提升网页的离线访问体验方面起着重要的作用。 离线缓存允许网页将所需的资源（如 HTML、CSS、JavaScript 文件、图像等）保存在用户设备的本地存储中。这意味着即使在没有网络连接的情况下，用户仍然可以访问网页的内容和功能。离线缓存不仅提供了更好的用户体验，而且还可以减轻服务器的负担，因为客户端可以直接通过本地缓存的资源进行加载，而无需每次都向服务器发出请求。 推">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Service Worker实现离线缓存和推送通知">
+<meta property="og:url" content="https://xiaoxi.mailjob.net/posts/4161334124.html">
+<meta property="og:site_name" content="前端小溪呀">
+<meta property="og:description" content="引言 离线缓存和推送通知在提升网页的离线访问体验方面起着重要的作用。 离线缓存允许网页将所需的资源（如 HTML、CSS、JavaScript 文件、图像等）保存在用户设备的本地存储中。这意味着即使在没有网络连接的情况下，用户仍然可以访问网页的内容和功能。离线缓存不仅提供了更好的用户体验，而且还可以减轻服务器的负担，因为客户端可以直接通过本地缓存的资源进行加载，而无需每次都向服务器发出请求。 推">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-04-20T01:22:16.000Z">
+<meta property="article:modified_time" content="2024-10-10T04:04:53.677Z">
+<meta property="article:author" content="左苗苗">
+<meta property="article:tag" content="blog">
+<meta name="twitter:card" content="summary">
+    
+        <link rel="alternate" href="/atom.xml" title="前端小溪呀" type="application/atom+xml">
+    
+    
+        <link rel="shortcut icon" href="/images/favicon.ico">
+    
+    
+        
+<link rel="stylesheet" href="https://unpkg.com/typeface-source-code-pro@1.1.13/index.css">
+
+    
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    
+        
+<link rel="stylesheet" href="https://unpkg.com/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css">
+
+    
+    
+        
+<link rel="stylesheet" href="https://unpkg.com/katex@0.16.7/dist/katex.min.css">
+
+    
+    
+    
+    
+<script src="https://unpkg.com/pace-js@1.2.4/pace.min.js"></script>
+
+    
+        
+<link rel="stylesheet" href="https://unpkg.com/wowjs@1.1.3/css/libs/animate.css">
+
+        
+<script src="https://unpkg.com/wowjs@1.1.3/dist/wow.min.js"></script>
+
+        <script>
+          new WOW({
+            offset: 0,
+            mobile: true,
+            live: false
+          }).init();
+        </script>
+    
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+    <body>
+    
+<div id='loader'>
+  <div class="loading-left-bg"></div>
+  <div class="loading-right-bg"></div>
+  <div class="spinner-box">
+    <div class="loading-taichi">
+      <svg width="150" height="150" viewBox="0 0 1024 1024" class="icon" version="1.1" xmlns="http://www.w3.org/2000/svg" shape-rendering="geometricPrecision">
+      <path d="M303.5 432A80 80 0 0 1 291.5 592A80 80 0 0 1 303.5 432z" fill="#ff6e6b" />
+      <path d="M512 65A447 447 0 0 1 512 959L512 929A417 417 0 0 0 512 95A417 417 0 0 0 512 929L512 959A447 447 0 0 1 512 65z" fill="#fd0d00" />
+      <path d="M512 95A417 417 0 0 1 929 512A208.5 208.5 0 0 1 720.5 720.5L720.5 592A80 80 0 0 0 720.5 432A80 80 0 0 0 720.5 592L720.5 720.5A208.5 208.5 0 0 1 512 512A208.5 208.5 0 0 0 303.5 303.5A208.5 208.5 0 0 0 95 512A417 417 0 0 1 512 95" fill="#fd0d00" />
+    </svg>
+    </div>
+    <div class="loading-word">Loading...</div>
+  </div>
+</div>
+</div>
+
+<script>
+  const endLoading = function() {
+    document.body.style.overflow = 'auto';
+    document.getElementById('loader').classList.add("loading");
+  }
+  window.addEventListener('load', endLoading);
+  document.getElementById('loader').addEventListener('click', endLoading);
+</script>
+
+
+    <div id="container">
+        <div id="wrap">
+            <header id="header">
+    
+        <img data-src="/images/banner.jpg" data-sizes="auto" alt="Service Worker实现离线缓存和推送通知" class="lazyload">
+    
+    <div id="header-outer" class="outer">
+        <div id="header-title" class="inner">
+            <div id="logo-wrap">
+                
+                    
+                    
+                        <a href="/" id="logo"><h1>Service Worker实现离线缓存和推送通知</h1></a>
+                    
+                
+            </div>
+            
+                
+                
+            
+        </div>
+        <div id="header-inner">
+            <nav id="main-nav">
+                <a id="main-nav-toggle" class="nav-icon"></a>
+                
+                    <span class="main-nav-link-wrap">
+                        <span class="main-nav-icon"></span>
+                        <a class="main-nav-link" href="/">首页</a>
+                    </span>
+                
+                    <span class="main-nav-link-wrap">
+                        <span class="main-nav-icon"></span>
+                        <a class="main-nav-link" href="/archives">归档</a>
+                    </span>
+                
+                    <span class="main-nav-link-wrap">
+                        <span class="main-nav-icon"></span>
+                        <a class="main-nav-link" href="/about">关于</a>
+                    </span>
+                
+                    <span class="main-nav-link-wrap">
+                        <span class="main-nav-icon"></span>
+                        <a class="main-nav-link" href="/friend">友链</a>
+                    </span>
+                
+            </nav>
+            <nav id="sub-nav">
+                
+                    <a id="nav-rss-link" class="nav-icon" href="/atom.xml"
+                       title="RSS 订阅"></a>
+                
+                
+            </nav>
+            <div id="search-form-wrap">
+                <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="搜索"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://xiaoxi.mailjob.net"></form>
+            </div>
+        </div>
+    </div>
+</header>
+
+            <div id="content" class="outer">
+                <section id="main"><article id="post-blog/Service-Worker实现离线缓存和推送通知" class="h-entry article article-type-post"
+         itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+    <div class="article-inner">
+        <div class="article-meta">
+            <div class="article-date wow slideInLeft">
+    <a href="/posts/4161334124.html" class="article-date-link">
+        <time datetime="2023-04-20T01:22:16.000Z"
+              itemprop="datePublished">2023-04-20</time>
+    </a>
+</div>
+
+            
+    <div class="article-category wow slideInLeft">
+        <a class="article-category-link" href="/categories/blog/">blog</a>
+    </div>
+
+
+        </div>
+        <div class="hr-line"></div>
+        
+
+        <div class="e-content article-entry" itemprop="articleBody">
+            
+                <h2 id="引言"><a class="markdownIt-Anchor" href="#引言"></a> 引言</h2>
+<p>离线缓存和推送通知在提升网页的离线访问体验方面起着重要的作用。</p>
+<p>离线缓存允许网页将所需的资源（如 HTML、CSS、JavaScript 文件、图像等）保存在用户设备的本地存储中。这意味着即使在没有网络连接的情况下，用户仍然可以访问网页的内容和功能。离线缓存不仅提供了更好的用户体验，而且还可以减轻服务器的负担，因为客户端可以直接通过本地缓存的资源进行加载，而无需每次都向服务器发出请求。</p>
+<p>推送通知是一种实时通知机制，允许网站向用户发送重要信息、更新和提醒。这些通知可以在用户没有打开网页的情况下显示在他们的设备上，以吸引用户的注意力并促使他们返回网站。推送通知可以用于诸如新消息、特别优惠、实时更新、重要事件等方面，大大增强了与用户的沟通和参与度。</p>
+<p>通过使用 Service Worker 技术来实现离线缓存和推送通知功能，我们能够利用浏览器背后运行的 JavaScript 脚本来处理网络请求并管理缓存。Service Worker 可以拦截网络请求并决定是从缓存中响应请求还是向服务器发出请求。这使得我们能够更好地控制资源的缓存和更新，并在用户离线时提供持久的离线体验。此外，Service Worker 还可以与推送通知 API 进行集成，以便实现实时的推送通知功能。</p>
+<p>综上所述，通过使用 Service Worker 技术来实现离线缓存和推送通知功能，我们能够提供更好的离线访问体验，使用户能够在没有网络连接的情况下访问网页内容，并及时地收到重要的更新和通知。这为网站的开发者和用户带来了诸多益处，提升了网页应用的可用性和用户参与度。</p>
+<h2 id="service-worker-简介"><a class="markdownIt-Anchor" href="#service-worker-简介"></a> Service Worker 简介</h2>
+<p>Service Worker 是浏览器提供的一种特殊的 JavaScript 脚本，它在浏览器背后运行，独立于网页页面的上下文。它充当了一个代理服务器的角色，能够拦截和处理浏览器发出的网络请求，并可以缓存资源、发送推送通知等。</p>
+<p>Service Worker 不直接操作 DOM，而是通过事件驱动的方式响应浏览器的事件和网络请求。它通过使用自己的生命周期管理机制来控制自身的安装、激活和销毁。</p>
+<p>Service Worker 的生命周期包括三个主要阶段：安装（Installation）、激活（Activation）和待命（Idle）。</p>
+<ul>
+<li>安装阶段：当 Service Worker 脚本文件被浏览器首次注册时，会触发安装事件。在安装事件中，可以进行一些初始化操作，例如缓存需要离线访问的资源。如果安装过程中没有遇到错误，Service Worker 进入激活阶段。</li>
+<li>激活阶段：在激活事件中，通常会执行一些清理工作，例如清除旧版本的缓存或进行数据库迁移等。激活之后，Service Worker 可以开始拦截网络请求。</li>
+<li>待命阶段：Service Worker 在激活完成后进入待命阶段，等待触发其他事件，例如拦截网络请求、接收推送通知等。在这个阶段，Service Worker 可以通过监听事件来处理离线缓存和推送通知。</li>
+</ul>
+<p>通过拦截网络请求，Service Worker 可以实现离线缓存。当浏览器发出请求时，Service Worker 可以首先检查缓存中是否存在所需资源的副本。如果缓存中存在该资源，则可以直接从缓存中响应请求，而无需向服务器发送请求。</p>
+<p>此外，Service Worker 还可以与推送通知 API 配合使用，通过拦截推送通知的订阅和发送过程，实现推送通知功能。它可以请求用户的许可，获取推送通知订阅的权限，并在需要发送通知时，将通知发送到用户的设备上。</p>
+<p>综上所述，Service Worker 通过拦截和处理浏览器的网络请求，实现了离线缓存和推送通知的功能。它可以拦截请求，从缓存中响应资源，提供离线访问体验；还可以与推送通知 API 结合，实现发送实时通知的功能，提高用户参与度。</p>
+<h2 id="离线缓存功能的实现"><a class="markdownIt-Anchor" href="#离线缓存功能的实现"></a> 离线缓存功能的实现</h2>
+<p>当使用 Service Worker 来缓存网页资源时，可以获得以下好处：</p>
+<ol>
+<li>
+<p>提供离线访问能力：使用 Service Worker 可以将网页资源缓存到本地，使用户在离线状态下仍能够访问已经缓存的网页。这对于移动设备或网络不稳定的环境下提供了更好的用户体验。</p>
+</li>
+<li>
+<p>加快页面加载速度：通过缓存网页资源，当用户再次访问缓存的网页时，可以直接从本地获取资源，而无需再次向服务器发送请求。这样可以减少网络延迟，大幅提高页面加载速度。</p>
+</li>
+</ol>
+<p>下面是一个示例代码，展示如何在 Service Worker 中进行离线缓存的设置和请求拦截：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 注册 Service Worker</span></span><br><span class="line">self.<span class="title function_">addEventListener</span>(<span class="string">&#x27;install&#x27;</span>, <span class="keyword">function</span>(<span class="params">event</span>) &#123;</span><br><span class="line">  event.<span class="title function_">waitUntil</span>(</span><br><span class="line">    caches.<span class="title function_">open</span>(<span class="string">&#x27;my-cache&#x27;</span>).<span class="title function_">then</span>(<span class="keyword">function</span>(<span class="params">cache</span>) &#123;</span><br><span class="line">      <span class="keyword">return</span> cache.<span class="title function_">addAll</span>([</span><br><span class="line">        <span class="string">&#x27;/&#x27;</span>,</span><br><span class="line">        <span class="string">&#x27;/styles.css&#x27;</span>,</span><br><span class="line">        <span class="string">&#x27;/script.js&#x27;</span>,</span><br><span class="line">        <span class="string">&#x27;/image.png&#x27;</span></span><br><span class="line">      ]);</span><br><span class="line">    &#125;)</span><br><span class="line">  );</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 缓存网页资源并拦截请求</span></span><br><span class="line">self.<span class="title function_">addEventListener</span>(<span class="string">&#x27;fetch&#x27;</span>, <span class="keyword">function</span>(<span class="params">event</span>) &#123;</span><br><span class="line">  event.<span class="title function_">respondWith</span>(</span><br><span class="line">    caches.<span class="title function_">match</span>(event.<span class="property">request</span>).<span class="title function_">then</span>(<span class="keyword">function</span>(<span class="params">response</span>) &#123;</span><br><span class="line">      <span class="keyword">if</span> (response) &#123;</span><br><span class="line">        <span class="keyword">return</span> response;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">return</span> <span class="title function_">fetch</span>(event.<span class="property">request</span>);</span><br><span class="line">    &#125;)</span><br><span class="line">  );</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>上述代码中的每个步骤的作用如下：</p>
+<ol>
+<li>
+<p>在安装事件(<code>install</code>)中，打开一个缓存(<code>caches.open()</code>)并将需要缓存的资源添加到缓存中(<code>cache.addAll()</code>)。这样，在 Service Worker 安装完成后，相应的资源就会被缓存到本地。</p>
+</li>
+<li>
+<p>在请求拦截事件(<code>fetch</code>)中，通过检查缓存是否有请求的资源(<code>caches.match(event.request)</code>)。如果有缓存的响应，则直接返回缓存的响应；否则，通过网络请求(<code>fetch(event.request)</code>)获取资源。</p>
+</li>
+</ol>
+<p>通过上述代码的设置和请求拦截，实现了离线缓存的功能。当网页首次加载时，Service Worker 会将指定的资源缓存到本地。当再次访问相同资源时，Service Worker 会拦截请求并检查缓存，如果有缓存的响应则直接返回，从而实现了加快页面加载速度和提供离线访问能力的效果。</p>
+<h2 id="推送通知功能的实现"><a class="markdownIt-Anchor" href="#推送通知功能的实现"></a> 推送通知功能的实现</h2>
+<p>通过 Service Worker 发送推送通知的好处在于可以吸引用户回到网站并提供即时的信息更新。以下是一些好处：</p>
+<ol>
+<li>
+<p>提高用户参与度：推送通知可以向用户发送有关新内容、特别优惠或重要事件的通知。这样可以吸引用户回到网站并提高用户的参与度。</p>
+</li>
+<li>
+<p>即时的信息更新：通过推送通知，用户可以立即获得最新的信息更新，而无需手动访问网站。这对于新闻、社交媒体、电子商务等需要即时信息的网站特别有用。</p>
+</li>
+<li>
+<p>强化品牌形象：通过发送个性化的推送通知，可以提升品牌形象和用户体验。及时向用户提供有价值的信息，可以增加用户对品牌的认知和忠诚度。</p>
+</li>
+</ol>
+<p>下面是一个示例代码，展示如何在 Service Worker 中设置推送通知的逻辑：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 请求用户授权</span></span><br><span class="line">self.<span class="title function_">addEventListener</span>(<span class="string">&#x27;push&#x27;</span>, <span class="keyword">function</span>(<span class="params">event</span>) &#123;</span><br><span class="line">  event.<span class="title function_">waitUntil</span>(</span><br><span class="line">    self.<span class="property">registration</span>.<span class="title function_">showNotification</span>(<span class="string">&#x27;标题&#x27;</span>, &#123;</span><br><span class="line">      <span class="attr">body</span>: <span class="string">&#x27;推送通知的内容&#x27;</span>,</span><br><span class="line">      <span class="attr">icon</span>: <span class="string">&#x27;图标.png&#x27;</span></span><br><span class="line">    &#125;)</span><br><span class="line">  );</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>上述代码中的每个步骤的作用如下：</p>
+<ol>
+<li>
+<p>注册推送事件(<code>push</code>)，当 Service Worker 接收到推送通知时触发。</p>
+</li>
+<li>
+<p>使用 <code>self.registration.showNotification()</code> 方法显示推送通知。可以通过设置标题、内容和图标等属性来自定义通知的外观。</p>
+</li>
+</ol>
+<p>为了使上述代码能够正常工作，还需要在网页的客户端代码中请求用户授权并将推送订阅信息发送给服务器。此处不提供具体示例代码，但以下是关键步骤的简要说明：</p>
+<ol>
+<li>
+<p>请求用户授权：在网页的客户端代码中，使用 <code>Notification.requestPermission()</code> 方法请求用户授权。用户同意后，才可以发送推送通知。</p>
+</li>
+<li>
+<p>获取推送订阅信息：在用户授权后，使用 <code>ServiceWorkerRegistration.pushManager.subscribe()</code> 方法获取推送订阅信息，并将其发送给服务器进行保存。</p>
+</li>
+<li>
+<p>服务器发送推送通知：服务器使用推送订阅信息，结合相应的标识符和内容，使用推送服务发送推送通知给特定的用户。</p>
+</li>
+</ol>
+<p>通过上述设置，网站可以使用 Service Worker 技术发送推送通知。当 Service Worker 收到推送事件时，会显示相应的推送通知，向用户传递重要信息。这样就实现了吸引用户回到网站并提供即时的信息更新的功能。</p>
+<p>总结：使用 Service Worker 技术来实现离线缓存和推送通知功能可以提升网页的离线访问体验，并吸引用户回到网站获取最新的信息。离线缓存可以使网页在离线状态下仍可访问，提高页面加载速度；推送通知则可以向用户发送即时的信息更新，增强用户参与度和品牌形象。鼓励开发者尝试使用这些技术来改进自己的网页应用。</p>
+
+            
+        </div>
+        <footer class="article-footer">
+            <a data-url="https://xiaoxi.mailjob.net/posts/4161334124.html" data-id="cm22rzbi7001ibzn7c7a1ev3x" data-title="Service Worker实现离线缓存和推送通知"
+               class="article-share-link">分享</a>
+            
+            
+            
+            
+    <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/blog/" rel="tag">blog</a></li></ul>
+
+
+        </footer>
+    </div>
+    
+        
+    <nav id="article-nav" class="wow fadeInUp">
+        
+            <div class="article-nav-link-wrap article-nav-link-left">
+                
+                    
+                    
+                        <img data-src="https://img.github.mailjob.net/202410101007825.jpg" data-sizes="auto" alt="JavaScript中的闭包原理及应用" class="lazyload">
+                    
+                
+                <a href="/posts/4249301191.html"></a>
+                <div class="article-nav-caption">前一篇</div>
+                <h3 class="article-nav-title">
+                    
+                        JavaScript中的闭包原理及应用
+                    
+                </h3>
+            </div>
+        
+        
+            <div class="article-nav-link-wrap article-nav-link-right">
+                
+                    
+                    
+                        <img data-src="https://img.github.mailjob.net/202410101007825.jpg" data-sizes="auto" alt="模块化开发：CommonJS、AMD 和 ES6 Modules 的区别与使用方式" class="lazyload">
+                    
+                
+                <a href="/posts/1789065048.html"></a>
+                <div class="article-nav-caption">后一篇</div>
+                <h3 class="article-nav-title">
+                    
+                        模块化开发：CommonJS、AMD 和 ES6 Modules 的区别与使用方式
+                    
+                </h3>
+            </div>
+        
+    </nav>
+
+
+    
+</article>
+
+
+
+
+
+
+
+
+
+
+
+</section>
+                
+                    <aside id="sidebar">
+    <div class="sidebar-wrap wow fadeInRight">
+        <div class="sidebar-author">
+            <img data-src="/avatar/avatar.PNG" data-sizes="auto" alt="左苗苗" class="lazyload">
+            <div class="sidebar-author-name">左苗苗</div>
+            <div class="sidebar-description">欢迎来到前端小溪呀！这是一个专注于前端开发的个人博客，旨在分享我在前端领域的学习、实践和探索。我会不断分享我的项目经验、前沿工具和最佳实践，并记录下我在编码过程中的思考和灵感。</div>
+        </div>
+        <div class="sidebar-state">
+            <div class="sidebar-state-article">
+                <div>文章</div>
+                <div class="sidebar-state-number">62</div>
+            </div>
+            <div class="sidebar-state-category">
+                <div>分类</div>
+                <div class="sidebar-state-number">9</div>
+            </div>
+            <div class="sidebar-state-tag">
+                <div>标签</div>
+                <div class="sidebar-state-number">9</div>
+            </div>
+        </div>
+        <div class="sidebar-social">
+            
+                <div class=icon-github>
+                    <a href=https://github.com/miaomiaozuo itemprop="url" target="_blank"></a>
+                </div>
+            
+        </div>
+        <div class="sidebar-menu">
+            
+                <div class="sidebar-menu-link-wrap">
+                    <a class="sidebar-menu-link-dummy" href="/"></a>
+                    <span class="sidebar-menu-icon"></span>
+                    <div class="sidebar-menu-link">首页</div>
+                </div>
+            
+                <div class="sidebar-menu-link-wrap">
+                    <a class="sidebar-menu-link-dummy" href="/archives"></a>
+                    <span class="sidebar-menu-icon"></span>
+                    <div class="sidebar-menu-link">归档</div>
+                </div>
+            
+                <div class="sidebar-menu-link-wrap">
+                    <a class="sidebar-menu-link-dummy" href="/about"></a>
+                    <span class="sidebar-menu-icon"></span>
+                    <div class="sidebar-menu-link">关于</div>
+                </div>
+            
+                <div class="sidebar-menu-link-wrap">
+                    <a class="sidebar-menu-link-dummy" href="/friend"></a>
+                    <span class="sidebar-menu-icon"></span>
+                    <div class="sidebar-menu-link">友链</div>
+                </div>
+            
+        </div>
+    </div>
+    
+        
+    <div class="widget-wrap wow fadeInRight">
+        <h3 class="widget-title">分类</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/blog/">blog</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/css/">css</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/design/">design</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/js/">js</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/node/">node</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/react/">react</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/ts/">ts</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/vue/">vue</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/web/">web</a></li></ul>
+        </div>
+    </div>
+
+
+    
+        
+    <div class="widget-wrap wow fadeInRight">
+        <h3 class="widget-title">标签云</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/blog/" style="font-size: 18px;">blog</a> <a href="/tags/css/" style="font-size: 10px;">css</a> <a href="/tags/design/" style="font-size: 20px;">design</a> <a href="/tags/js/" style="font-size: 16px;">js</a> <a href="/tags/node/" style="font-size: 10px;">node</a> <a href="/tags/react/" style="font-size: 12px;">react</a> <a href="/tags/ts/" style="font-size: 12px;">ts</a> <a href="/tags/vue/" style="font-size: 12px;">vue</a> <a href="/tags/web/" style="font-size: 14px;">web</a>
+        </div>
+    </div>
+
+
+    
+        
+    <div class="widget-wrap wow fadeInRight">
+        <h3 class="widget-title">归档</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/10/">十月 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/07/">七月 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/05/">五月 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/04/">四月 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/03/">三月 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/01/">一月 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/12/">十二月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/11/">十一月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/09/">九月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/08/">八月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/07/">七月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/06/">六月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/03/">三月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/01/">一月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/12/">十二月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/11/">十一月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/08/">八月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/07/">七月 2021</a></li></ul>
+        </div>
+    </div>
+
+
+    
+</aside>
+
+                
+            </div>
+            <footer id="footer" class="wow fadeInUp">
+    <div style="width: 100%; overflow: hidden"><div class="footer-line"></div></div>
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            
+                All website licensed under <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank">CC BY 4.0</a></br>
+            
+            <div>
+                <span class="icon-copyright"></span>
+                2020-2024
+                <span class="footer-info-sep"></span>
+                左苗苗
+            </div>
+            
+            
+            
+        </div>
+    </div>
+</footer>
+
+        </div>
+        <nav id="mobile-nav">
+    <div class="sidebar-wrap">
+        <div class="sidebar-author">
+            <img data-src="/avatar/avatar.PNG" data-sizes="auto" alt="左苗苗" class="lazyload">
+            <div class="sidebar-author-name">左苗苗</div>
+            <div class="sidebar-description">欢迎来到前端小溪呀！这是一个专注于前端开发的个人博客，旨在分享我在前端领域的学习、实践和探索。我会不断分享我的项目经验、前沿工具和最佳实践，并记录下我在编码过程中的思考和灵感。</div>
+        </div>
+        <div class="sidebar-state">
+            <div class="sidebar-state-article">
+                <div>文章</div>
+                <div class="sidebar-state-number">62</div>
+            </div>
+            <div class="sidebar-state-category">
+                <div>分类</div>
+                <div class="sidebar-state-number">9</div>
+            </div>
+            <div class="sidebar-state-tag">
+                <div>标签</div>
+                <div class="sidebar-state-number">9</div>
+            </div>
+        </div>
+        <div class="sidebar-social">
+            
+                <div class=icon-github>
+                    <a href=https://github.com/miaomiaozuo itemprop="url" target="_blank"></a>
+                </div>
+            
+        </div>
+        <div class="sidebar-menu">
+            
+                <div class="sidebar-menu-link-wrap">
+                    <a class="sidebar-menu-link-dummy" href="/"></a>
+                    <span class="sidebar-menu-icon"></span>
+                    <div class="sidebar-menu-link">首页</div>
+                </div>
+            
+                <div class="sidebar-menu-link-wrap">
+                    <a class="sidebar-menu-link-dummy" href="/archives"></a>
+                    <span class="sidebar-menu-icon"></span>
+                    <div class="sidebar-menu-link">归档</div>
+                </div>
+            
+                <div class="sidebar-menu-link-wrap">
+                    <a class="sidebar-menu-link-dummy" href="/about"></a>
+                    <span class="sidebar-menu-icon"></span>
+                    <div class="sidebar-menu-link">关于</div>
+                </div>
+            
+                <div class="sidebar-menu-link-wrap">
+                    <a class="sidebar-menu-link-dummy" href="/friend"></a>
+                    <span class="sidebar-menu-icon"></span>
+                    <div class="sidebar-menu-link">友链</div>
+                </div>
+            
+        </div>
+    </div>
+</nav>
+
+        
+<script src="https://unpkg.com/jquery@3.7.0/dist/jquery.min.js"></script>
+
+
+<script src="https://unpkg.com/lazysizes@5.3.2/lazysizes.min.js"></script>
+
+
+<script src="https://unpkg.com/clipboard@2.0.11/dist/clipboard.min.js"></script>
+
+
+
+    
+<script src="https://unpkg.com/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+
+
+
+
+
+    
+<script src="https://unpkg.com/mermaid@9.4.3/dist/mermaid.min.js"></script>
+
+    <script>
+        if (window.mermaid) {
+            mermaid.initialize({theme: 'forest'});
+        }
+    </script>
+
+
+
+<script src="/js/script.js"></script>
+
+
+    <!-- Gaug.es Analytics -->
+    <script>
+        var _gauges = _gauges || [];
+        (function () {
+            var t = document.createElement('script');
+            t.async = true;
+            t.id = 'gauges-tracker';
+            t.setAttribute('data-site-id', 'true');
+            t.setAttribute('data-track-path', 'https://track.gaug.es/track.gif');
+            t.src = 'https://d36ee2fcip1434.cloudfront.net/track.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(t, s);
+        })();
+    </script>
+    <!-- End Gaug.es Analytics -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </div>
+    <div class="site-search">
+        <div class="algolia-popup popup">
+            <div class="algolia-search">
+                <span class="algolia-search-input-icon"></span>
+                <div class="algolia-search-input" id="algolia-search-input"></div>
+            </div>
+
+            <div class="algolia-results">
+                <div id="algolia-stats"></div>
+                <div id="algolia-hits"></div>
+                <div id="algolia-pagination" class="algolia-pagination"></div>
+            </div>
+
+            <span class="popup-btn-close"></span>
+        </div>
+    </div>
+    <!-- hexo injector body_end start -->
+<script src="/js/insertHighlight.js"></script>
+<!-- hexo injector body_end end --></body>
+    </html>
+

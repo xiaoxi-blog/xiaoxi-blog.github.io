@@ -1,0 +1,594 @@
+
+    <!DOCTYPE html>
+    <html lang="zh-CN"
+            
+          
+    >
+    <head>
+    <meta charset="utf-8">
+    
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=true"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+
+        gtag('js', new Date());
+
+        gtag('config', 'true');
+    </script>
+    <!-- End Google Analytics -->
+
+
+    
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+          var hm = document.createElement("script");
+          hm.src = "https://hm.baidu.com/hm.js?true";
+          var s = document.getElementsByTagName("script")[0]; 
+          s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+
+    
+    <title>
+        使用IndexedDB进行前端数据持久化存储 |
+        
+        前端小溪呀</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Mulish:300,300italic,400,400italic,700,700italic%7CNoto%20Serif%20SC:300,300italic,400,400italic,700,700italic%7CUbuntu%20Mono:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+    
+<link rel="stylesheet" href="https://unpkg.com/@fortawesome/fontawesome-free/css/v4-font-face.min.css">
+
+    
+<link rel="stylesheet" href="/css/loader.css">
+
+    <meta name="description" content="1. 引言 在现代前端开发中，数据持久化存储是一个关键的需求。传统的客户端存储方案如Cookies和LocalStorage有着一定的限制，不能满足大规模数据的存储和高级查询需求。而IndexedDB作为HTML5规范的一部分，提供了一个强大的浏览器端数据库，允许前端开发者在浏览器中持久化存储结构化数据。本文将深入探讨如何使用IndexedDB进行前端数据持久化存储，包括IndexedDB的基本">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用IndexedDB进行前端数据持久化存储">
+<meta property="og:url" content="https://xiaoxi.mailjob.net/posts/877640509.html">
+<meta property="og:site_name" content="前端小溪呀">
+<meta property="og:description" content="1. 引言 在现代前端开发中，数据持久化存储是一个关键的需求。传统的客户端存储方案如Cookies和LocalStorage有着一定的限制，不能满足大规模数据的存储和高级查询需求。而IndexedDB作为HTML5规范的一部分，提供了一个强大的浏览器端数据库，允许前端开发者在浏览器中持久化存储结构化数据。本文将深入探讨如何使用IndexedDB进行前端数据持久化存储，包括IndexedDB的基本">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-07-16T13:08:47.000Z">
+<meta property="article:modified_time" content="2024-10-10T04:04:53.677Z">
+<meta property="article:author" content="左苗苗">
+<meta property="article:tag" content="blog">
+<meta name="twitter:card" content="summary">
+    
+        <link rel="alternate" href="/atom.xml" title="前端小溪呀" type="application/atom+xml">
+    
+    
+        <link rel="shortcut icon" href="/images/favicon.ico">
+    
+    
+        
+<link rel="stylesheet" href="https://unpkg.com/typeface-source-code-pro@1.1.13/index.css">
+
+    
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    
+        
+<link rel="stylesheet" href="https://unpkg.com/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css">
+
+    
+    
+        
+<link rel="stylesheet" href="https://unpkg.com/katex@0.16.7/dist/katex.min.css">
+
+    
+    
+    
+    
+<script src="https://unpkg.com/pace-js@1.2.4/pace.min.js"></script>
+
+    
+        
+<link rel="stylesheet" href="https://unpkg.com/wowjs@1.1.3/css/libs/animate.css">
+
+        
+<script src="https://unpkg.com/wowjs@1.1.3/dist/wow.min.js"></script>
+
+        <script>
+          new WOW({
+            offset: 0,
+            mobile: true,
+            live: false
+          }).init();
+        </script>
+    
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+    <body>
+    
+<div id='loader'>
+  <div class="loading-left-bg"></div>
+  <div class="loading-right-bg"></div>
+  <div class="spinner-box">
+    <div class="loading-taichi">
+      <svg width="150" height="150" viewBox="0 0 1024 1024" class="icon" version="1.1" xmlns="http://www.w3.org/2000/svg" shape-rendering="geometricPrecision">
+      <path d="M303.5 432A80 80 0 0 1 291.5 592A80 80 0 0 1 303.5 432z" fill="#ff6e6b" />
+      <path d="M512 65A447 447 0 0 1 512 959L512 929A417 417 0 0 0 512 95A417 417 0 0 0 512 929L512 959A447 447 0 0 1 512 65z" fill="#fd0d00" />
+      <path d="M512 95A417 417 0 0 1 929 512A208.5 208.5 0 0 1 720.5 720.5L720.5 592A80 80 0 0 0 720.5 432A80 80 0 0 0 720.5 592L720.5 720.5A208.5 208.5 0 0 1 512 512A208.5 208.5 0 0 0 303.5 303.5A208.5 208.5 0 0 0 95 512A417 417 0 0 1 512 95" fill="#fd0d00" />
+    </svg>
+    </div>
+    <div class="loading-word">Loading...</div>
+  </div>
+</div>
+</div>
+
+<script>
+  const endLoading = function() {
+    document.body.style.overflow = 'auto';
+    document.getElementById('loader').classList.add("loading");
+  }
+  window.addEventListener('load', endLoading);
+  document.getElementById('loader').addEventListener('click', endLoading);
+</script>
+
+
+    <div id="container">
+        <div id="wrap">
+            <header id="header">
+    
+        <img data-src="/images/banner.jpg" data-sizes="auto" alt="使用IndexedDB进行前端数据持久化存储" class="lazyload">
+    
+    <div id="header-outer" class="outer">
+        <div id="header-title" class="inner">
+            <div id="logo-wrap">
+                
+                    
+                    
+                        <a href="/" id="logo"><h1>使用IndexedDB进行前端数据持久化存储</h1></a>
+                    
+                
+            </div>
+            
+                
+                
+            
+        </div>
+        <div id="header-inner">
+            <nav id="main-nav">
+                <a id="main-nav-toggle" class="nav-icon"></a>
+                
+                    <span class="main-nav-link-wrap">
+                        <span class="main-nav-icon"></span>
+                        <a class="main-nav-link" href="/">首页</a>
+                    </span>
+                
+                    <span class="main-nav-link-wrap">
+                        <span class="main-nav-icon"></span>
+                        <a class="main-nav-link" href="/archives">归档</a>
+                    </span>
+                
+                    <span class="main-nav-link-wrap">
+                        <span class="main-nav-icon"></span>
+                        <a class="main-nav-link" href="/about">关于</a>
+                    </span>
+                
+                    <span class="main-nav-link-wrap">
+                        <span class="main-nav-icon"></span>
+                        <a class="main-nav-link" href="/friend">友链</a>
+                    </span>
+                
+            </nav>
+            <nav id="sub-nav">
+                
+                    <a id="nav-rss-link" class="nav-icon" href="/atom.xml"
+                       title="RSS 订阅"></a>
+                
+                
+            </nav>
+            <div id="search-form-wrap">
+                <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="搜索"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://xiaoxi.mailjob.net"></form>
+            </div>
+        </div>
+    </div>
+</header>
+
+            <div id="content" class="outer">
+                <section id="main"><article id="post-blog/使用IndexedDB进行前端数据持久化存储" class="h-entry article article-type-post"
+         itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+    <div class="article-inner">
+        <div class="article-meta">
+            <div class="article-date wow slideInLeft">
+    <a href="/posts/877640509.html" class="article-date-link">
+        <time datetime="2021-07-16T13:08:47.000Z"
+              itemprop="datePublished">2021-07-16</time>
+    </a>
+</div>
+
+            
+    <div class="article-category wow slideInLeft">
+        <a class="article-category-link" href="/categories/blog/">blog</a>
+    </div>
+
+
+        </div>
+        <div class="hr-line"></div>
+        
+
+        <div class="e-content article-entry" itemprop="articleBody">
+            
+                <h2 id="1-引言"><a class="markdownIt-Anchor" href="#1-引言"></a> 1. 引言</h2>
+<p>在现代前端开发中，数据持久化存储是一个关键的需求。传统的客户端存储方案如Cookies和LocalStorage有着一定的限制，不能满足大规模数据的存储和高级查询需求。而IndexedDB作为HTML5规范的一部分，提供了一个强大的浏览器端数据库，允许前端开发者在浏览器中持久化存储结构化数据。本文将深入探讨如何使用IndexedDB进行前端数据持久化存储，包括IndexedDB的基本概念、操作流程以及一些实用的技巧。</p>
+<h2 id="2-indexeddb简介"><a class="markdownIt-Anchor" href="#2-indexeddb简介"></a> 2. IndexedDB简介</h2>
+<h3 id="21-什么是indexeddb"><a class="markdownIt-Anchor" href="#21-什么是indexeddb"></a> 2.1 什么是IndexedDB</h3>
+<p>IndexedDB是一个用于在浏览器中存储结构化数据的API。它是HTML5规范的一部分，可以在现代浏览器中使用。IndexedDB允许我们创建一个异步的、支持事务的数据库，用于存储和检索数据。与传统的客户端存储方案相比，IndexedDB提供了更高级的数据查询和索引功能，适用于大规模数据的存储和复杂查询需求。</p>
+<h3 id="22-浏览器支持"><a class="markdownIt-Anchor" href="#22-浏览器支持"></a> 2.2 浏览器支持</h3>
+<p>目前，大多数现代浏览器都支持IndexedDB，包括Chrome、Firefox、Safari、Edge等主流浏览器。但是，由于IndexedDB是HTML5规范的一部分，旧版本的浏览器可能不支持或支持有限，因此在使用IndexedDB时需要注意兼容性。</p>
+<h2 id="3-使用indexeddb进行数据持久化存储"><a class="markdownIt-Anchor" href="#3-使用indexeddb进行数据持久化存储"></a> 3. 使用IndexedDB进行数据持久化存储</h2>
+<h3 id="31-创建数据库"><a class="markdownIt-Anchor" href="#31-创建数据库"></a> 3.1 创建数据库</h3>
+<p>在使用IndexedDB之前，首先需要创建一个数据库。一个域名可以有多个IndexedDB数据库，每个数据库可以包含多个数据存储对象（Object Store），每个数据存储对象包含多条数据记录。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> dbName = <span class="string">&quot;MyDatabase&quot;</span>;</span><br><span class="line"><span class="keyword">const</span> dbVersion = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> request = indexedDB.<span class="title function_">open</span>(dbName, dbVersion);</span><br><span class="line"></span><br><span class="line">request.<span class="property">onupgradeneeded</span> = <span class="function">(<span class="params">event</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> db = event.<span class="property">target</span>.<span class="property">result</span>;</span><br><span class="line">  <span class="comment">// 创建一个名为&quot;Users&quot;的数据存储对象，并指定主键字段为&quot;id&quot;</span></span><br><span class="line">  <span class="keyword">const</span> objectStore = db.<span class="title function_">createObjectStore</span>(<span class="string">&quot;Users&quot;</span>, &#123; <span class="attr">keyPath</span>: <span class="string">&quot;id&quot;</span> &#125;);</span><br><span class="line">  <span class="comment">// 创建一个名为&quot;EmailIndex&quot;的索引，用于根据邮箱查询数据</span></span><br><span class="line">  objectStore.<span class="title function_">createIndex</span>(<span class="string">&quot;EmailIndex&quot;</span>, <span class="string">&quot;email&quot;</span>, &#123; <span class="attr">unique</span>: <span class="literal">true</span> &#125;);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>在上面的代码中，我们使用<code>indexedDB.open</code>方法来创建数据库。如果数据库不存在或版本号升级，会触发<code>onupgradeneeded</code>事件，在事件处理函数中我们可以创建数据存储对象和索引。</p>
+<h3 id="32-添加数据"><a class="markdownIt-Anchor" href="#32-添加数据"></a> 3.2 添加数据</h3>
+<p>添加数据需要开启一个事务（transaction），然后在事务中通过数据存储对象来添加数据记录。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">request.<span class="property">onsuccess</span> = <span class="function">(<span class="params">event</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> db = event.<span class="property">target</span>.<span class="property">result</span>;</span><br><span class="line">  <span class="keyword">const</span> transaction = db.<span class="title function_">transaction</span>(<span class="string">&quot;Users&quot;</span>, <span class="string">&quot;readwrite&quot;</span>);</span><br><span class="line">  <span class="keyword">const</span> objectStore = transaction.<span class="title function_">objectStore</span>(<span class="string">&quot;Users&quot;</span>);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">const</span> user = &#123; <span class="attr">id</span>: <span class="number">1</span>, <span class="attr">name</span>: <span class="string">&quot;Alice&quot;</span>, <span class="attr">email</span>: <span class="string">&quot;alice@example.com&quot;</span> &#125;;</span><br><span class="line">  <span class="keyword">const</span> addUserRequest = objectStore.<span class="title function_">add</span>(user);</span><br><span class="line"></span><br><span class="line">  addUserRequest.<span class="property">onsuccess</span> = <span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;User added successfully!&quot;</span>);</span><br><span class="line">  &#125;;</span><br><span class="line"></span><br><span class="line">  addUserRequest.<span class="property">onerror</span> = <span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">error</span>(<span class="string">&quot;Failed to add user.&quot;</span>);</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>在上面的代码中，我们创建一个数据存储对象&quot;Users&quot;的事务，并通过<code>add</code>方法向数据存储对象中添加一条用户数据记录。</p>
+<h3 id="33-查询数据"><a class="markdownIt-Anchor" href="#33-查询数据"></a> 3.3 查询数据</h3>
+<p>查询数据也需要开启一个只读的事务，然后在事务中通过数据存储对象来进行查询操作。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">request.<span class="property">onsuccess</span> = <span class="function">(<span class="params">event</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> db = event.<span class="property">target</span>.<span class="property">result</span>;</span><br><span class="line">  <span class="keyword">const</span> transaction = db.<span class="title function_">transaction</span>(<span class="string">&quot;Users&quot;</span>, <span class="string">&quot;readonly&quot;</span>);</span><br><span class="line">  <span class="keyword">const</span> objectStore = transaction.<span class="title function_">objectStore</span>(<span class="string">&quot;Users&quot;</span>);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">const</span> getUserRequest = objectStore.<span class="title function_">get</span>(<span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">  getUserRequest.<span class="property">onsuccess</span> = <span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> user = getUserRequest.<span class="property">result</span>;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;User:&quot;</span>, user);</span><br><span class="line">  &#125;;</span><br><span class="line"></span><br><span class="line">  getUserRequest.<span class="property">onerror</span> = <span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">error</span>(<span class="string">&quot;Failed to get user.&quot;</span>);</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>在上面的代码中，我们创建一个数据存储对象&quot;Users&quot;的只读事务，并通过<code>get</code>方法根据主键id查询一条用户数据记录。</p>
+<h3 id="34-更新数据"><a class="markdownIt-Anchor" href="#34-更新数据"></a> 3.4 更新数据</h3>
+<p>更新数据与查询数据类似，需要开启一个读写的事务，然后通过数据存储对象来进行更新操作。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">request.<span class="property">onsuccess</span> = <span class="function">(<span class="params">event</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> db = event.<span class="property">target</span>.<span class="property">result</span>;</span><br><span class="line">  <span class="keyword">const</span> transaction = db.<span class="title function_">transaction</span>(<span class="string">&quot;Users&quot;</span>, <span class="string">&quot;readwrite&quot;</span>);</span><br><span class="line">  <span class="keyword">const</span> objectStore = transaction.<span class="title function_">objectStore</span>(<span class="string">&quot;Users&quot;</span>);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">const</span> updateUserRequest = objectStore.<span class="title function_">put</span>(&#123; <span class="attr">id</span>: <span class="number">1</span>, <span class="attr">name</span>: <span class="string">&quot;Alice Smith&quot;</span>, <span class="attr">email</span>: <span class="string">&quot;alice@example.com&quot;</span> &#125;);</span><br><span class="line"></span><br><span class="line">  updateUserRequest.<span class="property">onsuccess</span> = <span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;User updated successfully!&quot;</span>);</span><br><span class="line">  &#125;;</span><br><span class="line"></span><br><span class="line">  updateUserRequest.<span class="property">onerror</span> = <span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">error</span>(<span class="string">&quot;Failed to update user.&quot;</span>);</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>在上面的代码中，我们创建一个数据存储对象&quot;Users&quot;的读写事务，并通过<code>put</code>方法根据主键id更新一条用户数据记录。</p>
+<h3 id="35-删除数据"><a class="markdownIt-Anchor" href="#35-删除数据"></a> 3.5 删除数据</h3>
+<p>删除数据也需要开启一个读写的事务，然后通过数据存储对象来进行删除操作。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">request.<span class="property">onsuccess</span> = <span class="function">(<span class="params">event</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> db = event.<span class="property">target</span>.<span class="property">result</span>;</span><br><span class="line">  <span class="keyword">const</span> transaction = db.<span class="title function_">transaction</span>(<span class="string">&quot;Users&quot;</span>, <span class="string">&quot;readwrite&quot;</span>);</span><br><span class="line">  <span class="keyword">const</span> objectStore = transaction.<span class="title function_">objectStore</span>(<span class="string">&quot;Users&quot;</span>);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">const</span> deleteUserRequest = objectStore.<span class="title function_">delete</span>(<span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">  deleteUserRequest.<span class="property">onsuccess</span> = <span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;User deleted successfully!&quot;</span>);</span><br><span class="line">  &#125;;</span><br><span class="line"></span><br><span class="line">  deleteUserRequest.<span class="property">onerror</span> = <span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">error</span>(<span class="string">&quot;Failed to delete user.&quot;</span>);</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>在上面的代码中，我们创建一个数据存储对象&quot;Users&quot;的读写事务，并通过<code>delete</code>方法根据主键id删除一条用户数据记录。</p>
+<h3 id="36-使用索引"><a class="markdownIt-Anchor" href="#36-使用索引"></a> 3.6 使用索引</h3>
+<p>在IndexedDB中，我们可以使用索引来提高数据查询的性能。上面的例子中我们创建了一个名为&quot;EmailIndex&quot;的索引，</p>
+<p>用于根据邮箱查询数据。使用索引时，需要在打开数据库时升级数据库版本，并在<code>onupgradeneeded</code>事件处理函数中创建索引。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> dbName = <span class="string">&quot;MyDatabase&quot;</span>;</span><br><span class="line"><span class="keyword">const</span> dbVersion = <span class="number">2</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> request = indexedDB.<span class="title function_">open</span>(dbName, dbVersion);</span><br><span class="line"></span><br><span class="line">request.<span class="property">onupgradeneeded</span> = <span class="function">(<span class="params">event</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> db = event.<span class="property">target</span>.<span class="property">result</span>;</span><br><span class="line">  <span class="keyword">const</span> objectStore = db.<span class="title function_">createObjectStore</span>(<span class="string">&quot;Users&quot;</span>, &#123; <span class="attr">keyPath</span>: <span class="string">&quot;id&quot;</span> &#125;);</span><br><span class="line">  objectStore.<span class="title function_">createIndex</span>(<span class="string">&quot;EmailIndex&quot;</span>, <span class="string">&quot;email&quot;</span>, &#123; <span class="attr">unique</span>: <span class="literal">true</span> &#125;);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>创建了索引后，我们可以使用索引来进行高级查询。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">request.<span class="property">onsuccess</span> = <span class="function">(<span class="params">event</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> db = event.<span class="property">target</span>.<span class="property">result</span>;</span><br><span class="line">  <span class="keyword">const</span> transaction = db.<span class="title function_">transaction</span>(<span class="string">&quot;Users&quot;</span>, <span class="string">&quot;readonly&quot;</span>);</span><br><span class="line">  <span class="keyword">const</span> objectStore = transaction.<span class="title function_">objectStore</span>(<span class="string">&quot;Users&quot;</span>);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">const</span> emailIndex = objectStore.<span class="title function_">index</span>(<span class="string">&quot;EmailIndex&quot;</span>);</span><br><span class="line">  <span class="keyword">const</span> getUserByEmailRequest = emailIndex.<span class="title function_">get</span>(<span class="string">&quot;alice@example.com&quot;</span>);</span><br><span class="line"></span><br><span class="line">  getUserByEmailRequest.<span class="property">onsuccess</span> = <span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> user = getUserByEmailRequest.<span class="property">result</span>;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;User by email:&quot;</span>, user);</span><br><span class="line">  &#125;;</span><br><span class="line"></span><br><span class="line">  getUserByEmailRequest.<span class="property">onerror</span> = <span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">error</span>(<span class="string">&quot;Failed to get user by email.&quot;</span>);</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>在上面的代码中，我们创建一个&quot;Users&quot;数据存储对象的只读事务，并使用索引&quot;EmailIndex&quot;来查询用户数据。</p>
+<h2 id="4-异步操作和事务"><a class="markdownIt-Anchor" href="#4-异步操作和事务"></a> 4. 异步操作和事务</h2>
+<p>需要注意的是，IndexedDB的所有操作都是异步的，包括数据库的打开、数据的增删改查等操作。因此，在使用IndexedDB时，我们需要通过事件监听或Promise来处理异步操作。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> request = indexedDB.<span class="title function_">open</span>(dbName, dbVersion);</span><br><span class="line"></span><br><span class="line">request.<span class="property">onsuccess</span> = <span class="function">(<span class="params">event</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> db = event.<span class="property">target</span>.<span class="property">result</span>;</span><br><span class="line">  <span class="comment">// 在此处执行数据操作</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">request.<span class="property">onerror</span> = <span class="function">(<span class="params">event</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">error</span>(<span class="string">&quot;Failed to open database.&quot;</span>);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">request.<span class="property">onupgradeneeded</span> = <span class="function">(<span class="params">event</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> db = event.<span class="property">target</span>.<span class="property">result</span>;</span><br><span class="line">  <span class="comment">// 在此处创建数据库和数据存储对象</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>在上面的代码中，我们使用了<code>onsuccess</code>、<code>onerror</code>和<code>onupgradeneeded</code>等事件监听来处理数据库的打开和版本升级操作。</p>
+<p>此外，需要注意的是，IndexedDB的数据操作需要在事务中进行。事务是数据库操作的最小单位，可以包含一个或多个数据操作。在一个事务中，如果有任何一个数据操作失败，整个事务都会被回滚。</p>
+<h2 id="5-错误处理"><a class="markdownIt-Anchor" href="#5-错误处理"></a> 5. 错误处理</h2>
+<p>在使用IndexedDB时，我们需要及时处理错误，避免数据操作的失败导致应用出现异常。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> request = indexedDB.<span class="title function_">open</span>(dbName, dbVersion);</span><br><span class="line"></span><br><span class="line">request.<span class="property">onerror</span> = <span class="function">(<span class="params">event</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">error</span>(<span class="string">&quot;Failed to open database:&quot;</span>, event.<span class="property">target</span>.<span class="property">error</span>);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>在上面的代码中，我们使用了<code>onerror</code>事件监听来处理数据库打开失败的情况，并通过<code>event.target.error</code>来获取错误信息。</p>
+<h2 id="6-使用indexeddb封装数据操作"><a class="markdownIt-Anchor" href="#6-使用indexeddb封装数据操作"></a> 6. 使用IndexedDB封装数据操作</h2>
+<p>由于IndexedDB的操作较为复杂，为了方便数据的增删改查，我们可以封装一个简单的IndexedDB工具类。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">IndexedDBStore</span> &#123;</span><br><span class="line">  <span class="title function_">constructor</span>(<span class="params">dbName, dbVersion, objectStoreName</span>) &#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">dbName</span> = dbName;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">dbVersion</span> = dbVersion;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">objectStoreName</span> = objectStoreName;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">db</span> = <span class="literal">null</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">async</span> <span class="title function_">open</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">const</span> request = indexedDB.<span class="title function_">open</span>(<span class="variable language_">this</span>.<span class="property">dbName</span>, <span class="variable language_">this</span>.<span class="property">dbVersion</span>);</span><br><span class="line"></span><br><span class="line">      request.<span class="property">onsuccess</span> = <span class="function">(<span class="params">event</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="variable language_">this</span>.<span class="property">db</span> = event.<span class="property">target</span>.<span class="property">result</span>;</span><br><span class="line">        <span class="title function_">resolve</span>(<span class="variable language_">this</span>.<span class="property">db</span>);</span><br><span class="line">      &#125;;</span><br><span class="line"></span><br><span class="line">      request.<span class="property">onerror</span> = <span class="function">(<span class="params">event</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="title function_">reject</span>(event.<span class="property">target</span>.<span class="property">error</span>);</span><br><span class="line">      &#125;;</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">async</span> <span class="title function_">get</span>(<span class="params">id</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">const</span> transaction = <span class="variable language_">this</span>.<span class="property">db</span>.<span class="title function_">transaction</span>(<span class="variable language_">this</span>.<span class="property">objectStoreName</span>, <span class="string">&quot;readonly&quot;</span>);</span><br><span class="line">      <span class="keyword">const</span> objectStore = transaction.<span class="title function_">objectStore</span>(<span class="variable language_">this</span>.<span class="property">objectStoreName</span>);</span><br><span class="line">      <span class="keyword">const</span> getRequest = objectStore.<span class="title function_">get</span>(id);</span><br><span class="line"></span><br><span class="line">      getRequest.<span class="property">onsuccess</span> = <span class="function">() =&gt;</span> &#123;</span><br><span class="line">        <span class="title function_">resolve</span>(getRequest.<span class="property">result</span>);</span><br><span class="line">      &#125;;</span><br><span class="line"></span><br><span class="line">      getRequest.<span class="property">onerror</span> = <span class="function">() =&gt;</span> &#123;</span><br><span class="line">        <span class="title function_">reject</span>(getRequest.<span class="property">error</span>);</span><br><span class="line">      &#125;;</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 其他增删改查方法</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在上面的代码中，我们创建了一个名为<code>IndexedDBStore</code>的类，封装了数据库的打开和数据操作方法。使用该类，我们可以更加简洁地进行IndexedDB的数据持久化存储。</p>
+<h2 id="7-结论"><a class="markdownIt-Anchor" href="#7-结论"></a> 7. 结论</h2>
+<p>IndexedDB是一个强大的浏览器端数据库，允许前端开发者在浏览器中持久化存储结构化数据。相比传统的客户端存储方案，IndexedDB提供了更高级的数据查询和索引功能，适用于大规模数据的存储和复杂查询需求。在使用IndexedDB时，我们需要注意异步操作和事务，以及及时处理错误。通过封装IndexedDB操作，我们可以更加简洁地进行前端数据持久化存储，提升应用性能和用户体验。希望本文能帮助您了解并学会如何使用IndexedDB进行前端数据持久化存储。</p>
+
+            
+        </div>
+        <footer class="article-footer">
+            <a data-url="https://xiaoxi.mailjob.net/posts/877640509.html" data-id="cm22rzbic001wbzn73jb0aj08" data-title="使用IndexedDB进行前端数据持久化存储"
+               class="article-share-link">分享</a>
+            
+            
+            
+            
+    <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/blog/" rel="tag">blog</a></li></ul>
+
+
+        </footer>
+    </div>
+    
+        
+    <nav id="article-nav" class="wow fadeInUp">
+        
+            <div class="article-nav-link-wrap article-nav-link-left">
+                
+                    
+                    
+                        <img data-src="https://img.github.mailjob.net/202410101007825.jpg" data-sizes="auto" alt="使用WebAssembly加速前端应用" class="lazyload">
+                    
+                
+                <a href="/posts/3370766766.html"></a>
+                <div class="article-nav-caption">前一篇</div>
+                <h3 class="article-nav-title">
+                    
+                        使用WebAssembly加速前端应用
+                    
+                </h3>
+            </div>
+        
+        
+            <div class="article-nav-link-wrap article-nav-link-right">
+                
+                    
+                    
+                        <img data-src="https://img.github.mailjob.net/202410101007825.jpg" data-sizes="auto" alt="使用GraphQL优化前端数据获取" class="lazyload">
+                    
+                
+                <a href="/posts/4048986550.html"></a>
+                <div class="article-nav-caption">后一篇</div>
+                <h3 class="article-nav-title">
+                    
+                        使用GraphQL优化前端数据获取
+                    
+                </h3>
+            </div>
+        
+    </nav>
+
+
+    
+</article>
+
+
+
+
+
+
+
+
+
+
+
+</section>
+                
+                    <aside id="sidebar">
+    <div class="sidebar-wrap wow fadeInRight">
+        <div class="sidebar-author">
+            <img data-src="/avatar/avatar.PNG" data-sizes="auto" alt="左苗苗" class="lazyload">
+            <div class="sidebar-author-name">左苗苗</div>
+            <div class="sidebar-description">欢迎来到前端小溪呀！这是一个专注于前端开发的个人博客，旨在分享我在前端领域的学习、实践和探索。我会不断分享我的项目经验、前沿工具和最佳实践，并记录下我在编码过程中的思考和灵感。</div>
+        </div>
+        <div class="sidebar-state">
+            <div class="sidebar-state-article">
+                <div>文章</div>
+                <div class="sidebar-state-number">62</div>
+            </div>
+            <div class="sidebar-state-category">
+                <div>分类</div>
+                <div class="sidebar-state-number">9</div>
+            </div>
+            <div class="sidebar-state-tag">
+                <div>标签</div>
+                <div class="sidebar-state-number">9</div>
+            </div>
+        </div>
+        <div class="sidebar-social">
+            
+                <div class=icon-github>
+                    <a href=https://github.com/miaomiaozuo itemprop="url" target="_blank"></a>
+                </div>
+            
+        </div>
+        <div class="sidebar-menu">
+            
+                <div class="sidebar-menu-link-wrap">
+                    <a class="sidebar-menu-link-dummy" href="/"></a>
+                    <span class="sidebar-menu-icon"></span>
+                    <div class="sidebar-menu-link">首页</div>
+                </div>
+            
+                <div class="sidebar-menu-link-wrap">
+                    <a class="sidebar-menu-link-dummy" href="/archives"></a>
+                    <span class="sidebar-menu-icon"></span>
+                    <div class="sidebar-menu-link">归档</div>
+                </div>
+            
+                <div class="sidebar-menu-link-wrap">
+                    <a class="sidebar-menu-link-dummy" href="/about"></a>
+                    <span class="sidebar-menu-icon"></span>
+                    <div class="sidebar-menu-link">关于</div>
+                </div>
+            
+                <div class="sidebar-menu-link-wrap">
+                    <a class="sidebar-menu-link-dummy" href="/friend"></a>
+                    <span class="sidebar-menu-icon"></span>
+                    <div class="sidebar-menu-link">友链</div>
+                </div>
+            
+        </div>
+    </div>
+    
+        
+    <div class="widget-wrap wow fadeInRight">
+        <h3 class="widget-title">分类</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/blog/">blog</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/css/">css</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/design/">design</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/js/">js</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/node/">node</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/react/">react</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/ts/">ts</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/vue/">vue</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/web/">web</a></li></ul>
+        </div>
+    </div>
+
+
+    
+        
+    <div class="widget-wrap wow fadeInRight">
+        <h3 class="widget-title">标签云</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/blog/" style="font-size: 18px;">blog</a> <a href="/tags/css/" style="font-size: 10px;">css</a> <a href="/tags/design/" style="font-size: 20px;">design</a> <a href="/tags/js/" style="font-size: 16px;">js</a> <a href="/tags/node/" style="font-size: 10px;">node</a> <a href="/tags/react/" style="font-size: 12px;">react</a> <a href="/tags/ts/" style="font-size: 12px;">ts</a> <a href="/tags/vue/" style="font-size: 12px;">vue</a> <a href="/tags/web/" style="font-size: 14px;">web</a>
+        </div>
+    </div>
+
+
+    
+        
+    <div class="widget-wrap wow fadeInRight">
+        <h3 class="widget-title">归档</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/10/">十月 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/07/">七月 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/05/">五月 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/04/">四月 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/03/">三月 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/01/">一月 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/12/">十二月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/11/">十一月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/09/">九月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/08/">八月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/07/">七月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/06/">六月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/03/">三月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/01/">一月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/12/">十二月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/11/">十一月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/08/">八月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/07/">七月 2021</a></li></ul>
+        </div>
+    </div>
+
+
+    
+</aside>
+
+                
+            </div>
+            <footer id="footer" class="wow fadeInUp">
+    <div style="width: 100%; overflow: hidden"><div class="footer-line"></div></div>
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            
+                All website licensed under <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank">CC BY 4.0</a></br>
+            
+            <div>
+                <span class="icon-copyright"></span>
+                2020-2024
+                <span class="footer-info-sep"></span>
+                左苗苗
+            </div>
+            
+            
+            
+        </div>
+    </div>
+</footer>
+
+        </div>
+        <nav id="mobile-nav">
+    <div class="sidebar-wrap">
+        <div class="sidebar-author">
+            <img data-src="/avatar/avatar.PNG" data-sizes="auto" alt="左苗苗" class="lazyload">
+            <div class="sidebar-author-name">左苗苗</div>
+            <div class="sidebar-description">欢迎来到前端小溪呀！这是一个专注于前端开发的个人博客，旨在分享我在前端领域的学习、实践和探索。我会不断分享我的项目经验、前沿工具和最佳实践，并记录下我在编码过程中的思考和灵感。</div>
+        </div>
+        <div class="sidebar-state">
+            <div class="sidebar-state-article">
+                <div>文章</div>
+                <div class="sidebar-state-number">62</div>
+            </div>
+            <div class="sidebar-state-category">
+                <div>分类</div>
+                <div class="sidebar-state-number">9</div>
+            </div>
+            <div class="sidebar-state-tag">
+                <div>标签</div>
+                <div class="sidebar-state-number">9</div>
+            </div>
+        </div>
+        <div class="sidebar-social">
+            
+                <div class=icon-github>
+                    <a href=https://github.com/miaomiaozuo itemprop="url" target="_blank"></a>
+                </div>
+            
+        </div>
+        <div class="sidebar-menu">
+            
+                <div class="sidebar-menu-link-wrap">
+                    <a class="sidebar-menu-link-dummy" href="/"></a>
+                    <span class="sidebar-menu-icon"></span>
+                    <div class="sidebar-menu-link">首页</div>
+                </div>
+            
+                <div class="sidebar-menu-link-wrap">
+                    <a class="sidebar-menu-link-dummy" href="/archives"></a>
+                    <span class="sidebar-menu-icon"></span>
+                    <div class="sidebar-menu-link">归档</div>
+                </div>
+            
+                <div class="sidebar-menu-link-wrap">
+                    <a class="sidebar-menu-link-dummy" href="/about"></a>
+                    <span class="sidebar-menu-icon"></span>
+                    <div class="sidebar-menu-link">关于</div>
+                </div>
+            
+                <div class="sidebar-menu-link-wrap">
+                    <a class="sidebar-menu-link-dummy" href="/friend"></a>
+                    <span class="sidebar-menu-icon"></span>
+                    <div class="sidebar-menu-link">友链</div>
+                </div>
+            
+        </div>
+    </div>
+</nav>
+
+        
+<script src="https://unpkg.com/jquery@3.7.0/dist/jquery.min.js"></script>
+
+
+<script src="https://unpkg.com/lazysizes@5.3.2/lazysizes.min.js"></script>
+
+
+<script src="https://unpkg.com/clipboard@2.0.11/dist/clipboard.min.js"></script>
+
+
+
+    
+<script src="https://unpkg.com/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+
+
+
+
+
+    
+<script src="https://unpkg.com/mermaid@9.4.3/dist/mermaid.min.js"></script>
+
+    <script>
+        if (window.mermaid) {
+            mermaid.initialize({theme: 'forest'});
+        }
+    </script>
+
+
+
+<script src="/js/script.js"></script>
+
+
+    <!-- Gaug.es Analytics -->
+    <script>
+        var _gauges = _gauges || [];
+        (function () {
+            var t = document.createElement('script');
+            t.async = true;
+            t.id = 'gauges-tracker';
+            t.setAttribute('data-site-id', 'true');
+            t.setAttribute('data-track-path', 'https://track.gaug.es/track.gif');
+            t.src = 'https://d36ee2fcip1434.cloudfront.net/track.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(t, s);
+        })();
+    </script>
+    <!-- End Gaug.es Analytics -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </div>
+    <div class="site-search">
+        <div class="algolia-popup popup">
+            <div class="algolia-search">
+                <span class="algolia-search-input-icon"></span>
+                <div class="algolia-search-input" id="algolia-search-input"></div>
+            </div>
+
+            <div class="algolia-results">
+                <div id="algolia-stats"></div>
+                <div id="algolia-hits"></div>
+                <div id="algolia-pagination" class="algolia-pagination"></div>
+            </div>
+
+            <span class="popup-btn-close"></span>
+        </div>
+    </div>
+    <!-- hexo injector body_end start -->
+<script src="/js/insertHighlight.js"></script>
+<!-- hexo injector body_end end --></body>
+    </html>
+

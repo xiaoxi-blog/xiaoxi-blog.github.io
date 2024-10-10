@@ -1,0 +1,858 @@
+
+    <!DOCTYPE html>
+    <html lang="zh-CN"
+            
+          
+    >
+    <head>
+    <meta charset="utf-8">
+    
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=true"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+
+        gtag('js', new Date());
+
+        gtag('config', 'true');
+    </script>
+    <!-- End Google Analytics -->
+
+
+    
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+          var hm = document.createElement("script");
+          hm.src = "https://hm.baidu.com/hm.js?true";
+          var s = document.getElementsByTagName("script")[0]; 
+          s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+
+    
+    <title>
+        
+        前端小溪呀</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Mulish:300,300italic,400,400italic,700,700italic%7CNoto%20Serif%20SC:300,300italic,400,400italic,700,700italic%7CUbuntu%20Mono:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+    
+<link rel="stylesheet" href="https://unpkg.com/@fortawesome/fontawesome-free/css/v4-font-face.min.css">
+
+    
+<link rel="stylesheet" href="/css/loader.css">
+
+    <meta name="description" content="欢迎来到前端小溪呀！这是一个专注于前端开发的个人博客，旨在分享我在前端领域的学习、实践和探索。我会不断分享我的项目经验、前沿工具和最佳实践，并记录下我在编码过程中的思考和灵感。">
+<meta property="og:type" content="website">
+<meta property="og:title" content="前端小溪呀">
+<meta property="og:url" content="https://xiaoxi.mailjob.net/page/6/index.html">
+<meta property="og:site_name" content="前端小溪呀">
+<meta property="og:description" content="欢迎来到前端小溪呀！这是一个专注于前端开发的个人博客，旨在分享我在前端领域的学习、实践和探索。我会不断分享我的项目经验、前沿工具和最佳实践，并记录下我在编码过程中的思考和灵感。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:author" content="左苗苗">
+<meta property="article:tag" content="前端小溪呀,左苗苗,web,html,js,jquery,vue,css,react,typescript,javascript">
+<meta name="twitter:card" content="summary">
+    
+        <link rel="alternate" href="/atom.xml" title="前端小溪呀" type="application/atom+xml">
+    
+    
+        <link rel="shortcut icon" href="/images/favicon.ico">
+    
+    
+        
+<link rel="stylesheet" href="https://unpkg.com/typeface-source-code-pro@1.1.13/index.css">
+
+    
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    
+        
+<link rel="stylesheet" href="https://unpkg.com/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css">
+
+    
+    
+        
+<link rel="stylesheet" href="https://unpkg.com/katex@0.16.7/dist/katex.min.css">
+
+    
+    
+    
+    
+<script src="https://unpkg.com/pace-js@1.2.4/pace.min.js"></script>
+
+    
+        
+<link rel="stylesheet" href="https://unpkg.com/wowjs@1.1.3/css/libs/animate.css">
+
+        
+<script src="https://unpkg.com/wowjs@1.1.3/dist/wow.min.js"></script>
+
+        <script>
+          new WOW({
+            offset: 0,
+            mobile: true,
+            live: false
+          }).init();
+        </script>
+    
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+    <body>
+    
+<div id='loader'>
+  <div class="loading-left-bg"></div>
+  <div class="loading-right-bg"></div>
+  <div class="spinner-box">
+    <div class="loading-taichi">
+      <svg width="150" height="150" viewBox="0 0 1024 1024" class="icon" version="1.1" xmlns="http://www.w3.org/2000/svg" shape-rendering="geometricPrecision">
+      <path d="M303.5 432A80 80 0 0 1 291.5 592A80 80 0 0 1 303.5 432z" fill="#ff6e6b" />
+      <path d="M512 65A447 447 0 0 1 512 959L512 929A417 417 0 0 0 512 95A417 417 0 0 0 512 929L512 959A447 447 0 0 1 512 65z" fill="#fd0d00" />
+      <path d="M512 95A417 417 0 0 1 929 512A208.5 208.5 0 0 1 720.5 720.5L720.5 592A80 80 0 0 0 720.5 432A80 80 0 0 0 720.5 592L720.5 720.5A208.5 208.5 0 0 1 512 512A208.5 208.5 0 0 0 303.5 303.5A208.5 208.5 0 0 0 95 512A417 417 0 0 1 512 95" fill="#fd0d00" />
+    </svg>
+    </div>
+    <div class="loading-word">Loading...</div>
+  </div>
+</div>
+</div>
+
+<script>
+  const endLoading = function() {
+    document.body.style.overflow = 'auto';
+    document.getElementById('loader').classList.add("loading");
+  }
+  window.addEventListener('load', endLoading);
+  document.getElementById('loader').addEventListener('click', endLoading);
+</script>
+
+
+    <div id="container">
+        <div id="wrap">
+            <header id="header">
+    
+        <img data-src="/images/banner.jpg" data-sizes="auto" alt="" class="lazyload">
+    
+    <div id="header-outer" class="outer">
+        <div id="header-title" class="inner">
+            <div id="logo-wrap">
+                
+                    
+                    
+                        <a href="/" id="logo"><h1>前端小溪呀</h1></a>
+                    
+                
+            </div>
+            
+                
+                
+                    <h2 id="subtitle-wrap">
+                        <a href="/" id="subtitle">探索前端世界的小溪，记录技术与灵感的交汇之地</a>
+                    </h2>
+                
+            
+        </div>
+        <div id="header-inner">
+            <nav id="main-nav">
+                <a id="main-nav-toggle" class="nav-icon"></a>
+                
+                    <span class="main-nav-link-wrap">
+                        <span class="main-nav-icon"></span>
+                        <a class="main-nav-link" href="/">首页</a>
+                    </span>
+                
+                    <span class="main-nav-link-wrap">
+                        <span class="main-nav-icon"></span>
+                        <a class="main-nav-link" href="/archives">归档</a>
+                    </span>
+                
+                    <span class="main-nav-link-wrap">
+                        <span class="main-nav-icon"></span>
+                        <a class="main-nav-link" href="/about">关于</a>
+                    </span>
+                
+                    <span class="main-nav-link-wrap">
+                        <span class="main-nav-icon"></span>
+                        <a class="main-nav-link" href="/friend">友链</a>
+                    </span>
+                
+            </nav>
+            <nav id="sub-nav">
+                
+                    <a id="nav-rss-link" class="nav-icon" href="/atom.xml"
+                       title="RSS 订阅"></a>
+                
+                
+            </nav>
+            <div id="search-form-wrap">
+                <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="搜索"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://xiaoxi.mailjob.net"></form>
+            </div>
+        </div>
+    </div>
+</header>
+
+            <div id="content" class="outer">
+                <section id="main">
+    
+        
+    <div class="post-wrap-left wow fadeInUp">
+        
+            <a class="post-link" href="/posts/4034153648.html"></a>
+        
+        
+        <div class="post-cover-left">
+            
+                
+                
+                    <img data-src="https://img.github.mailjob.net/202410101007825.jpg" data-sizes="auto" alt="使用WebAuthn实现更安全的Web身份认证" class="lazyload">
+                
+            
+
+        </div>
+        <div class="post-info">
+            <div class="post-meta">
+                <a><span class="icon-calendar"></span>2021-11-26</a>
+                
+                    <a><span class="icon-pencil"></span>2k 字</a>
+                
+                
+                    <a><span class="icon-clock"></span>7 分钟</a>
+                
+            </div>
+            <h2 class="post-title">使用WebAuthn实现更安全的Web身份认证</h2>
+            <article class="post-article">
+                
+                     1. 引言
+随着Web应用的普及，用户的身份认证和安全性成为了一个重要的问题。传统的用户名和密码认证方式存在着安全性较低的问题，如密码泄露、暴力破解等。为了解决这些问题，WebAuthn（Web Authentication）应运而生。WebAuthn是由W3C制定的Web身份认证标准，它提供了一种更安全、更便捷的身份认证方式，允许用户使用生物特征或硬件密钥来进行身份验证。本文将深入探讨WebAuthn的工作原理、部署和使用，并探讨它如何实现更安全的Web身份认证。
+ 2. WebAuthn简介
+ 2.1 什么是WebAuthn
+WebAuthn是Web身份认证标准的缩写，全称为Web Au
+                
+            </article>
+        </div>
+    </div>
+
+
+    
+        
+    <div class="post-wrap-right wow fadeInUp">
+        
+            <a class="post-link" href="/posts/3963773679.html"></a>
+        
+        <div class="post-cover-right">
+            
+                
+                
+                    <img data-src="https://img.github.mailjob.net/202410101007825.jpg" data-sizes="auto" alt="前端错误监控和日志记录的实践" class="lazyload">
+                
+            
+        </div>
+        <div class="post-info">
+            <div class="post-meta">
+                <a><span class="icon-calendar"></span>2021-08-26</a>
+                
+                    <a><span class="icon-pencil"></span>1.1k 字</a>
+                
+                
+                    <a><span class="icon-clock"></span>4 分钟</a>
+                
+            </div>
+            <h2 class="post-title">前端错误监控和日志记录的实践</h2>
+            <article class="post-article">
+                
+                     1. 引言
+在现代Web应用程序中，前端错误监控和日志记录是保障应用稳定性和用户体验的关键步骤。通过监控和记录前端错误，我们可以及时发现和解决潜在的问题，提高应用程序的质量。本文将介绍前端错误监控和日志记录的实践方法，并展示如何使用现有工具来实现这些功能。
+ 2. 错误监控
+前端错误监控是指收集和监控应用程序中发生的JavaScript错误、网络请求错误和其他异常。以下是错误监控的实践步骤：
+ 2.1 监听全局错误
+通过监听全局错误事件 window.onerror，我们可以捕获页面中未被捕获的JavaScript错误，并及时上报到服务器。
+12345window.onerror = fun
+                
+            </article>
+        </div>
+    </div>
+
+
+    
+        
+    <div class="post-wrap-left wow fadeInUp">
+        
+            <a class="post-link" href="/posts/1286147728.html"></a>
+        
+        
+        <div class="post-cover-left">
+            
+                
+                
+                    <img data-src="https://img.github.mailjob.net/202410101007825.jpg" data-sizes="auto" alt="前端代码分割和按需加载策略" class="lazyload">
+                
+            
+
+        </div>
+        <div class="post-info">
+            <div class="post-meta">
+                <a><span class="icon-calendar"></span>2021-08-01</a>
+                
+                    <a><span class="icon-pencil"></span>917 字</a>
+                
+                
+                    <a><span class="icon-clock"></span>3 分钟</a>
+                
+            </div>
+            <h2 class="post-title">前端代码分割和按需加载策略</h2>
+            <article class="post-article">
+                
+                     1. 引言
+前端应用的规模不断增长，为了提高网页加载速度和减少初始加载时间，前端代码分割和按需加载策略变得越来越重要。本文将深入探讨前端代码分割和按需加载的策略，以及如何使用现代前端工具来实现这些优化。
+ 2. 前端代码分割
+前端代码分割是指将一个大的代码包拆分成多个较小的代码块，然后在需要时按需加载这些代码块。这样做的主要目的是减少初始加载时间，只加载当前页面所需的代码，而不是一次性加载所有代码。
+ 2.1 懒加载模块
+懒加载模块是指将某些模块延迟加载，直到用户需要时再进行加载。这可以通过动态导入（dynamic import）实现，该特性允许我们在运行时动态加载模块。
+12345// 懒
+                
+            </article>
+        </div>
+    </div>
+
+
+    
+        
+    <div class="post-wrap-right wow fadeInUp">
+        
+            <a class="post-link" href="/posts/246694316.html"></a>
+        
+        <div class="post-cover-right">
+            
+                
+                
+                    <img data-src="https://img.github.mailjob.net/202410101007825.jpg" data-sizes="auto" alt="构建可访问的自定义表单控件" class="lazyload">
+                
+            
+        </div>
+        <div class="post-info">
+            <div class="post-meta">
+                <a><span class="icon-calendar"></span>2021-07-26</a>
+                
+                    <a><span class="icon-pencil"></span>1.2k 字</a>
+                
+                
+                    <a><span class="icon-clock"></span>5 分钟</a>
+                
+            </div>
+            <h2 class="post-title">构建可访问的自定义表单控件</h2>
+            <article class="post-article">
+                
+                    在现代Web应用程序中，表单是一个至关重要的组件。用户可以通过表单输入数据并与应用程序进行交互。为了提高用户体验，并让所有用户都能轻松地使用您的应用程序，构建可访问的自定义表单控件是非常重要的。
+ 1. 语义化的HTML结构
+在构建可访问的自定义表单控件时，我们应该始终使用语义化的HTML标签。这有助于屏幕阅读器正确解读和呈现表单内容，从而提供更好的辅助功能体验。以下是一些常见的语义化标签：
+ 1.1 &amp;lt;label&amp;gt;元素
+&amp;lt;label&amp;gt;元素用于关联表单控件和标签文本，从而实现点击标签时聚焦到对应控件的效果。对于自定义控件，确保&amp;lt;label&amp;gt;的for属性与控件
+                
+            </article>
+        </div>
+    </div>
+
+
+    
+        
+    <div class="post-wrap-left wow fadeInUp">
+        
+            <a class="post-link" href="/posts/1667110673.html"></a>
+        
+        
+        <div class="post-cover-left">
+            
+                
+                
+                    <img data-src="https://img.github.mailjob.net/202410101007825.jpg" data-sizes="auto" alt="使用WebGL打造3D交互体验" class="lazyload">
+                
+            
+
+        </div>
+        <div class="post-info">
+            <div class="post-meta">
+                <a><span class="icon-calendar"></span>2021-07-26</a>
+                
+                    <a><span class="icon-pencil"></span>1.8k 字</a>
+                
+                
+                    <a><span class="icon-clock"></span>6 分钟</a>
+                
+            </div>
+            <h2 class="post-title">使用WebGL打造3D交互体验</h2>
+            <article class="post-article">
+                
+                     1. 引言
+WebGL是一种基于Web标准的3D图形渲染技术，它允许在浏览器中实现高性能的3D图形渲染和交互体验。通过WebGL，开发者可以在Web应用中创建令人惊叹的3D场景和交互效果，从而提升用户体验。本文将深入探讨WebGL的基本原理和使用方法，介绍如何使用WebGL打造精美的3D交互体验。
+ 2. WebGL简介
+ 2.1 什么是WebGL
+WebGL（Web Graphics Library）是一种基于OpenGL ES 2.0标准的JavaScript API，用于在Web浏览器中实现硬件加速的3D图形渲染。通过使用WebGL，开发者可以直接访问计算机的GPU（图形处理单元），从
+                
+            </article>
+        </div>
+    </div>
+
+
+    
+        
+    <div class="post-wrap-right wow fadeInUp">
+        
+            <a class="post-link" href="/posts/3370766766.html"></a>
+        
+        <div class="post-cover-right">
+            
+                
+                
+                    <img data-src="https://img.github.mailjob.net/202410101007825.jpg" data-sizes="auto" alt="使用WebAssembly加速前端应用" class="lazyload">
+                
+            
+        </div>
+        <div class="post-info">
+            <div class="post-meta">
+                <a><span class="icon-calendar"></span>2021-07-20</a>
+                
+                    <a><span class="icon-pencil"></span>1.4k 字</a>
+                
+                
+                    <a><span class="icon-clock"></span>5 分钟</a>
+                
+            </div>
+            <h2 class="post-title">使用WebAssembly加速前端应用</h2>
+            <article class="post-article">
+                
+                     1. 引言
+随着Web应用变得越来越复杂，前端性能成为一个关键问题。传统的JavaScript在处理大规模数据和复杂计算时可能会遇到性能瓶颈。为了解决这个问题，WebAssembly应运而生。WebAssembly是一种低级字节码格式，可以在现代浏览器中运行，用于将其他语言编译成高效的Web代码。本文将深入探讨如何使用WebAssembly来加速前端应用，包括WebAssembly的基本概念、部署和使用，并通过实例来说明WebAssembly的性能优势。
+ 2. WebAssembly简介
+ 2.1 什么是WebAssembly
+WebAssembly是一种面向浏览器的二进制格式，它可以在现
+                
+            </article>
+        </div>
+    </div>
+
+
+    
+        
+    <div class="post-wrap-left wow fadeInUp">
+        
+            <a class="post-link" href="/posts/877640509.html"></a>
+        
+        
+        <div class="post-cover-left">
+            
+                
+                
+                    <img data-src="https://img.github.mailjob.net/202410101007825.jpg" data-sizes="auto" alt="使用IndexedDB进行前端数据持久化存储" class="lazyload">
+                
+            
+
+        </div>
+        <div class="post-info">
+            <div class="post-meta">
+                <a><span class="icon-calendar"></span>2021-07-16</a>
+                
+                    <a><span class="icon-pencil"></span>2.3k 字</a>
+                
+                
+                    <a><span class="icon-clock"></span>9 分钟</a>
+                
+            </div>
+            <h2 class="post-title">使用IndexedDB进行前端数据持久化存储</h2>
+            <article class="post-article">
+                
+                     1. 引言
+在现代前端开发中，数据持久化存储是一个关键的需求。传统的客户端存储方案如Cookies和LocalStorage有着一定的限制，不能满足大规模数据的存储和高级查询需求。而IndexedDB作为HTML5规范的一部分，提供了一个强大的浏览器端数据库，允许前端开发者在浏览器中持久化存储结构化数据。本文将深入探讨如何使用IndexedDB进行前端数据持久化存储，包括IndexedDB的基本概念、操作流程以及一些实用的技巧。
+ 2. IndexedDB简介
+ 2.1 什么是IndexedDB
+IndexedDB是一个用于在浏览器中存储结构化数据的API。它是HTML5规范的一部分，可以在
+                
+            </article>
+        </div>
+    </div>
+
+
+    
+        
+    <div class="post-wrap-right wow fadeInUp">
+        
+            <a class="post-link" href="/posts/4048986550.html"></a>
+        
+        <div class="post-cover-right">
+            
+                
+                
+                    <img data-src="https://img.github.mailjob.net/202410101007825.jpg" data-sizes="auto" alt="使用GraphQL优化前端数据获取" class="lazyload">
+                
+            
+        </div>
+        <div class="post-info">
+            <div class="post-meta">
+                <a><span class="icon-calendar"></span>2021-07-08</a>
+                
+                    <a><span class="icon-pencil"></span>1.3k 字</a>
+                
+                
+                    <a><span class="icon-clock"></span>5 分钟</a>
+                
+            </div>
+            <h2 class="post-title">使用GraphQL优化前端数据获取</h2>
+            <article class="post-article">
+                
+                     1. 引言
+在现代前端开发中，数据获取是一个关键的环节。传统的REST API虽然简单易用，但在一些复杂的场景下可能会出现过度获取或不足获取数据的问题。为了解决这些问题，GraphQL应运而生。GraphQL是一种由Facebook开发的查询语言和运行时环境，它允许前端开发者明确指定需要的数据，并返回所需的精确数据，避免了传统REST API的缺陷。本文将深入探讨如何使用GraphQL优化前端数据获取，探讨GraphQL的优势以及如何在前端发起GraphQL查询。
+ 2. GraphQL的优势
+ 2.1 精确查询
+传统REST API中，数据的获取是由后端定义好的，前端无法自由控制返回的数据
+                
+            </article>
+        </div>
+    </div>
+
+
+    
+        
+    <div class="post-wrap-left wow fadeInUp">
+        
+            <a class="post-link" href="/posts/3282530036.html"></a>
+        
+        
+        <div class="post-cover-left">
+            
+                
+                
+                    <img data-src="https://img.github.mailjob.net/202410101007825.jpg" data-sizes="auto" alt="使用Canvas实现电子签名功能" class="lazyload">
+                
+            
+
+        </div>
+        <div class="post-info">
+            <div class="post-meta">
+                <a><span class="icon-calendar"></span>2021-07-06</a>
+                
+                    <a><span class="icon-pencil"></span>884 字</a>
+                
+                
+                    <a><span class="icon-clock"></span>3 分钟</a>
+                
+            </div>
+            <h2 class="post-title">使用Canvas实现电子签名功能</h2>
+            <article class="post-article">
+                
+                     1. 引言
+电子签名是在数字环境中代替传统纸质签名的一种方式，它在许多应用中都得到了广泛使用，如电子合同、电子表单等。在本文中，我们将使用HTML的Canvas元素和JavaScript来实现一个简单的电子签名功能，用户可以通过鼠标或触摸屏幕来绘制自己的签名。
+ 2. 实现电子签名功能
+以下是实现电子签名功能的HTML和JavaScript代码：
+ 2.1 HTML代码
+12345678910111213141516&amp;lt;!DOCTYPE html&amp;gt;&amp;lt;html&amp;gt;&amp;lt;head&amp;gt;  &amp;lt;title&amp;gt;电子签名&amp;lt;/title&amp;gt;  &amp;lt;style
+                
+            </article>
+        </div>
+    </div>
+
+
+    
+        
+    <div class="post-wrap-right wow fadeInUp">
+        
+            <a class="post-link" href="/posts/1366327135.html"></a>
+        
+        <div class="post-cover-right">
+            
+                
+                
+                    <img data-src="https://img.github.mailjob.net/202410101007825.jpg" data-sizes="auto" alt="使用Canvas创建交互式绘图应用" class="lazyload">
+                
+            
+        </div>
+        <div class="post-info">
+            <div class="post-meta">
+                <a><span class="icon-calendar"></span>2021-07-05</a>
+                
+                    <a><span class="icon-pencil"></span>737 字</a>
+                
+                
+                    <a><span class="icon-clock"></span>2 分钟</a>
+                
+            </div>
+            <h2 class="post-title">使用Canvas创建交互式绘图应用</h2>
+            <article class="post-article">
+                
+                    创建一个交互式绘图应用是一项有趣且具有挑战性的任务。在本篇文章中，我们将使用HTML的Canvas元素和JavaScript来实现一个简单的交互式绘图应用，其中用户可以通过鼠标点击和拖拽来绘制图形。
+ 准备工作
+在开始之前，请确保您的HTML文件中包含一个Canvas元素和一些基本的CSS样式来设置Canvas的大小和边框。
+1234567891011121314&amp;lt;!DOCTYPE html&amp;gt;&amp;lt;html&amp;gt;&amp;lt;head&amp;gt;  &amp;lt;title&amp;gt;交互式绘图应用&amp;lt;/title&amp;gt;  &amp;lt;style&amp;gt;    #canvas &amp;#123;   
+                
+            </article>
+        </div>
+    </div>
+
+
+    
+
+
+    <nav id="page-nav" class="wow fadeInUp">
+        
+        <a class="extend prev" rel="prev" href="/page/5/">&laquo; 上一页</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><span class="page-number current">6</span><a class="page-number" href="/page/7/">7</a><a class="extend next" rel="next" href="/page/7/">下一页 &raquo;</a>
+    </nav>
+
+
+</section>
+                
+                    <aside id="sidebar">
+    <div class="sidebar-wrap wow fadeInRight">
+        <div class="sidebar-author">
+            <img data-src="/avatar/avatar.PNG" data-sizes="auto" alt="左苗苗" class="lazyload">
+            <div class="sidebar-author-name">左苗苗</div>
+            <div class="sidebar-description">欢迎来到前端小溪呀！这是一个专注于前端开发的个人博客，旨在分享我在前端领域的学习、实践和探索。我会不断分享我的项目经验、前沿工具和最佳实践，并记录下我在编码过程中的思考和灵感。</div>
+        </div>
+        <div class="sidebar-state">
+            <div class="sidebar-state-article">
+                <div>文章</div>
+                <div class="sidebar-state-number">62</div>
+            </div>
+            <div class="sidebar-state-category">
+                <div>分类</div>
+                <div class="sidebar-state-number">9</div>
+            </div>
+            <div class="sidebar-state-tag">
+                <div>标签</div>
+                <div class="sidebar-state-number">9</div>
+            </div>
+        </div>
+        <div class="sidebar-social">
+            
+                <div class=icon-github>
+                    <a href=https://github.com/miaomiaozuo itemprop="url" target="_blank"></a>
+                </div>
+            
+        </div>
+        <div class="sidebar-menu">
+            
+                <div class="sidebar-menu-link-wrap">
+                    <a class="sidebar-menu-link-dummy" href="/"></a>
+                    <span class="sidebar-menu-icon"></span>
+                    <div class="sidebar-menu-link">首页</div>
+                </div>
+            
+                <div class="sidebar-menu-link-wrap">
+                    <a class="sidebar-menu-link-dummy" href="/archives"></a>
+                    <span class="sidebar-menu-icon"></span>
+                    <div class="sidebar-menu-link">归档</div>
+                </div>
+            
+                <div class="sidebar-menu-link-wrap">
+                    <a class="sidebar-menu-link-dummy" href="/about"></a>
+                    <span class="sidebar-menu-icon"></span>
+                    <div class="sidebar-menu-link">关于</div>
+                </div>
+            
+                <div class="sidebar-menu-link-wrap">
+                    <a class="sidebar-menu-link-dummy" href="/friend"></a>
+                    <span class="sidebar-menu-icon"></span>
+                    <div class="sidebar-menu-link">友链</div>
+                </div>
+            
+        </div>
+    </div>
+    
+        
+    <div class="widget-wrap wow fadeInRight">
+        <h3 class="widget-title">分类</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/blog/">blog</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/css/">css</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/design/">design</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/js/">js</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/node/">node</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/react/">react</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/ts/">ts</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/vue/">vue</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/web/">web</a></li></ul>
+        </div>
+    </div>
+
+
+    
+        
+    <div class="widget-wrap wow fadeInRight">
+        <h3 class="widget-title">标签云</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/blog/" style="font-size: 18px;">blog</a> <a href="/tags/css/" style="font-size: 10px;">css</a> <a href="/tags/design/" style="font-size: 20px;">design</a> <a href="/tags/js/" style="font-size: 16px;">js</a> <a href="/tags/node/" style="font-size: 10px;">node</a> <a href="/tags/react/" style="font-size: 12px;">react</a> <a href="/tags/ts/" style="font-size: 12px;">ts</a> <a href="/tags/vue/" style="font-size: 12px;">vue</a> <a href="/tags/web/" style="font-size: 14px;">web</a>
+        </div>
+    </div>
+
+
+    
+        
+    <div class="widget-wrap wow fadeInRight">
+        <h3 class="widget-title">归档</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/10/">十月 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/07/">七月 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/05/">五月 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/04/">四月 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/03/">三月 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/01/">一月 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/12/">十二月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/11/">十一月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/09/">九月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/08/">八月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/07/">七月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/06/">六月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/03/">三月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/01/">一月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/12/">十二月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/11/">十一月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/08/">八月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/07/">七月 2021</a></li></ul>
+        </div>
+    </div>
+
+
+    
+</aside>
+
+                
+            </div>
+            <footer id="footer" class="wow fadeInUp">
+    <div style="width: 100%; overflow: hidden"><div class="footer-line"></div></div>
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            
+                All website licensed under <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank">CC BY 4.0</a></br>
+            
+            <div>
+                <span class="icon-copyright"></span>
+                2020-2024
+                <span class="footer-info-sep"></span>
+                左苗苗
+            </div>
+            
+            
+            
+        </div>
+    </div>
+</footer>
+
+        </div>
+        <nav id="mobile-nav">
+    <div class="sidebar-wrap">
+        <div class="sidebar-author">
+            <img data-src="/avatar/avatar.PNG" data-sizes="auto" alt="左苗苗" class="lazyload">
+            <div class="sidebar-author-name">左苗苗</div>
+            <div class="sidebar-description">欢迎来到前端小溪呀！这是一个专注于前端开发的个人博客，旨在分享我在前端领域的学习、实践和探索。我会不断分享我的项目经验、前沿工具和最佳实践，并记录下我在编码过程中的思考和灵感。</div>
+        </div>
+        <div class="sidebar-state">
+            <div class="sidebar-state-article">
+                <div>文章</div>
+                <div class="sidebar-state-number">62</div>
+            </div>
+            <div class="sidebar-state-category">
+                <div>分类</div>
+                <div class="sidebar-state-number">9</div>
+            </div>
+            <div class="sidebar-state-tag">
+                <div>标签</div>
+                <div class="sidebar-state-number">9</div>
+            </div>
+        </div>
+        <div class="sidebar-social">
+            
+                <div class=icon-github>
+                    <a href=https://github.com/miaomiaozuo itemprop="url" target="_blank"></a>
+                </div>
+            
+        </div>
+        <div class="sidebar-menu">
+            
+                <div class="sidebar-menu-link-wrap">
+                    <a class="sidebar-menu-link-dummy" href="/"></a>
+                    <span class="sidebar-menu-icon"></span>
+                    <div class="sidebar-menu-link">首页</div>
+                </div>
+            
+                <div class="sidebar-menu-link-wrap">
+                    <a class="sidebar-menu-link-dummy" href="/archives"></a>
+                    <span class="sidebar-menu-icon"></span>
+                    <div class="sidebar-menu-link">归档</div>
+                </div>
+            
+                <div class="sidebar-menu-link-wrap">
+                    <a class="sidebar-menu-link-dummy" href="/about"></a>
+                    <span class="sidebar-menu-icon"></span>
+                    <div class="sidebar-menu-link">关于</div>
+                </div>
+            
+                <div class="sidebar-menu-link-wrap">
+                    <a class="sidebar-menu-link-dummy" href="/friend"></a>
+                    <span class="sidebar-menu-icon"></span>
+                    <div class="sidebar-menu-link">友链</div>
+                </div>
+            
+        </div>
+    </div>
+</nav>
+
+        
+<script src="https://unpkg.com/jquery@3.7.0/dist/jquery.min.js"></script>
+
+
+<script src="https://unpkg.com/lazysizes@5.3.2/lazysizes.min.js"></script>
+
+
+<script src="https://unpkg.com/clipboard@2.0.11/dist/clipboard.min.js"></script>
+
+
+
+    
+<script src="https://unpkg.com/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+
+
+
+
+
+    
+<script src="https://unpkg.com/mermaid@9.4.3/dist/mermaid.min.js"></script>
+
+    <script>
+        if (window.mermaid) {
+            mermaid.initialize({theme: 'forest'});
+        }
+    </script>
+
+
+
+<script src="/js/script.js"></script>
+
+
+    <!-- Gaug.es Analytics -->
+    <script>
+        var _gauges = _gauges || [];
+        (function () {
+            var t = document.createElement('script');
+            t.async = true;
+            t.id = 'gauges-tracker';
+            t.setAttribute('data-site-id', 'true');
+            t.setAttribute('data-track-path', 'https://track.gaug.es/track.gif');
+            t.src = 'https://d36ee2fcip1434.cloudfront.net/track.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(t, s);
+        })();
+    </script>
+    <!-- End Gaug.es Analytics -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </div>
+    <div class="site-search">
+        <div class="algolia-popup popup">
+            <div class="algolia-search">
+                <span class="algolia-search-input-icon"></span>
+                <div class="algolia-search-input" id="algolia-search-input"></div>
+            </div>
+
+            <div class="algolia-results">
+                <div id="algolia-stats"></div>
+                <div id="algolia-hits"></div>
+                <div id="algolia-pagination" class="algolia-pagination"></div>
+            </div>
+
+            <span class="popup-btn-close"></span>
+        </div>
+    </div>
+    <!-- hexo injector body_end start -->
+<script src="/js/insertHighlight.js"></script>
+<!-- hexo injector body_end end --></body>
+    </html>
+
